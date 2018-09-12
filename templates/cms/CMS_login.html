@@ -1,0 +1,28 @@
+{% from "common/_macros.html" import static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CMS后台登录系统</title>
+    <link rel="stylesheet" href="{{ static("cms/css/cms_login.css") }}">
+    <link rel="stylesheet" href="{{ static("common/style.css") }}">
+</head>
+<body>
+<div class="main">
+    <div id="top">
+        <a class="login fl" href="#">登录</a>
+        <a class="regist fr" href="#">注册</a>
+    </div>
+    <div class="bottom">
+        <form action="" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div id="login_input"><span id="con1"></span> <input class="username" type="text" name="email" placeholder="邮箱号/用户名"></div>
+            <div id="passwd_input"><span id="con2"></span><input class="passwd" type="text" name="passwd" placeholder="密码"></div>
+            <div class="remeber"> <input type="checkbox" name="remember" value="1"> <span>记住我</span></div>
+            <div class="submit_form"><input id="submit_con" type="submit"></div>
+            <div id="error"><p>{{ message }}</p></div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

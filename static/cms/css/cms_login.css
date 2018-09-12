@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+.fl{            /*左浮动*/
+    float: left;
+}
+.fr{
+    float: right;  /*右浮动*/
+}
+body{
+    background: url("../img/bg.jpg") no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.main{
+    width: 400px;
+    height: 500px;
+    margin: 300px auto;
+    background-color: #fff;
+    opacity: .9;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    overflow: hidden;
+}
+#top{
+    width: 150px;
+    height: 50px;
+    margin: 50px auto;
+    line-height: 50px;
+}
+.regist,.login{
+    width: 56px;
+    height: 44px;
+    font-size: 26px;
+    padding: 3px;
+    color: #969696;;
+}
+.regist:hover{
+    border-bottom: 3px solid #ea6f5a;
+    font-weight: 700;
+}
+.login{
+    border-bottom: 3px solid #ea6f5a;
+    font-weight: 700;
+    color: #ea6f5a;
+}
+.bottom{
+    width: 300px;
+    height: 320px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.username,.passwd{
+    width: 251px;
+    height: 50px;
+    margin-bottom: 0;
+    padding: 4px 12px 4px 35px;
+    border: 1px solid #c8c8c8;
+    font-size: 20px;
+    outline: none;
+}
+#con1,#con2{
+    position: absolute;
+    left: 8px;
+    top: 23px;
+    font-size: 18px;
+    color: #969696;
+}
+#login_input{
+    position: relative;
+}
+#passwd_input{
+    position: relative;
+}
+.submit_form{
+    margin-top: 50px;
+}
+.submit_form input{
+    margin-top: 20px;
+    width: 100%;
+    padding: 9px 18px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    background: #42c02e;
+    cursor: pointer;
+    outline: none;
+    display: block;
+    clear: both;
+}
+#submit_con:hover{
+    background: #187cb7;
+}
+.remeber{ !important;
+    float: left;
+    margin: 15px 4px;
+    text-align: center;
+    font-size: 14px;
+    color: #969696;
+}
+#error{
+    width: 287px;
+    height: 50px;
+    position: absolute;
+    left: 815px;
+    top: 700px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 50px;
+    color: red;
+    font-weight: 700;
+}

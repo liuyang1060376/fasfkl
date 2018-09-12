@@ -1,0 +1,41 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% block title %}
+    个人中心
+{% endblock %}
+{% block page_title %}
+    个人信息
+{% endblock %}
+{% block main_content %}
+    {% set user=g.cms_user %}
+<table class="table table-bordered">
+  <tbody>
+        <tr>
+            <td>用户名称</td>
+            <td>{{ user.username }}</td>
+
+        </tr>
+        <tr>
+            <td>角色</td>
+            <td>{% for role in user.roles %}
+                {{ role.name }}&nbsp;
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>权限</td>
+            <td>{% for role in user.roles %}
+                {{ role.desc }}&nbsp;&nbsp;&nbsp;&nbsp;
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>邮箱地址</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td>创建时间</td>
+            <td>{{ user.join_time }}</td>
+        </tr>
+  </tbody>
+</table>
+{% endblock %}

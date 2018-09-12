@@ -1,0 +1,33 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% from 'common/_macros.html' import static %}
+{% block title %}
+    修改邮箱
+{% endblock %}
+{% block page_title %}
+    修改邮箱
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ static('cms/css/cms_resetemail.css') }}">
+    <link rel="stylesheet" href="{{ static('common/style.css') }}">
+    <script src='{{ static('cms/js/cms_resetemail.js') }}'></script>
+{% endblock %}
+{% block main_content %}
+    <div class="email_set">
+        <form action="" method="post">
+            <!--email输入部分-->
+            <div id="input_email">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <span></span><input type="text" name="email" placeholder="请输入邮箱账号">
+            </div >
+            <!--验证码输入部分-->
+            <div class="input_code">
+                <div class="code"><input type="text" name="code" placeholder="请输入验证码"></div>
+                <div class="get"><a id="get_code" href="#" onclick="timers(this)">获取验证码</a></div>
+            </div>
+            <!--修改按钮部分-->
+            <div>
+                <button  id="xiugai">立即修改</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
