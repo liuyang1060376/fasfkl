@@ -1,0 +1,124 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% from './common/_macros.html' import static %}
+{% block title %}
+板块管理
+{% endblock %}
+{% block head %}
+    <script src="{{ static('cms/js/cms_boarder.js') }}"></script>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.dev.js"></script>
+    <script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+    <script src="{{ static('common/lqiniu.js') }}"></script>
+{% endblock %}
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+    <div class="col-md-1 col-md-offset-11">
+        <button class="btn btn-warning"
+                data-toggle="modal" style="margin-left: -11px" data-target="#board_dialog"> 添加板块</button>
+    </div>
+</div>
+
+{#    全部轮播图列表，表格#}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-boarded">
+            <tr>
+                <th>板块名称</th>
+                <th>板块简介</th>
+                <th>板块图片地址</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            {#遍历输出板块里面的参数#}
+            {% for board in boards %}
+            {# 把board里面的信息获取到tr里面的属性，为了后期对board的信息进行管理使用#}
+                <tr data-name='{{ board.name }}' data-img-url={{ board.img_url }}
+                    data-intr={{ board.intr }}  data-id={{ board.id }}  data-notice={{ board.notice }}>
+                     <td>{{ board.name }}</td>
+                     <td>{{ board.intr }}</td>
+                     <td><a href="{{ board.img_url}}" target="_blank">{{ board.img_url }}</a></td>
+                     <td>{{ board.create_time }}</td>
+                     <td>
+                         <button class="btn-success btn edit_board_btn"
+                                 data-toggle="modal" data-target="#board_dialog">编辑</button>
+                         <button class="btn btn-danger del-board">删除</button>
+                     </td>
+            </tr>
+            {% endfor %}
+        </table>
+    <div style="text-align: center">{{ pagination.links }}</div>
+    </div>
+</div>
+{#轮播图表格结束#}
+
+
+
+{#    board弹出框#}
+    <!-- Modal -->
+<div class="modal fade" id="board_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <!--inner-->
+                <form class="form-horizontal">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <!--名称-->
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="板块名称">
+                        </div>
+                    </div>
+
+                    <!--图片-->
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">图片</label>
+                        <div class="col-sm-8 ">
+                            <input type="text" name="img_url" class="form-control" id="inputPassword3" placeholder="板块图片">
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="select_img" class="btn btn-success" style="border-radius: 18px;margin-left: -12px" >选择图片</button>
+                        </div>
+                    </div>
+
+                    <!--简介-->
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">简介</label>
+                        <div class="col-sm-10">
+                           <textarea name="intr" class="form-control" rows="3">
+
+                           </textarea>
+                        </div>
+                    </div>
+
+                    {#公告#}
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">简介</label>
+                        <div class="col-sm-10">
+                           <textarea name="notice" class="form-control" rows="3">
+                           </textarea>
+                        </div>
+                    </div>
+                     <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="submit-btn" type="button" class="btn btn-primary">保存</button>
+            </div>
+
+                </form>
+                <!--inner结束-->
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% from'common/_macros.html'import static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="{{ static("front/css/front_login.css") }}">
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{{ static('common/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{ static('common/sweetalert/xtalert.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('common/sweetalert/sweetalert.css') }}">
+    <script src="{{ static('front/js/front_login.js') }}"></script>
+</head>
+<body>
+<nav>
+    <div class="nav_bar w">
+        <div id="logo"><a href="{{ url_for('front.index') }}"><img src="../../static/front/img/login_logo.png" alt=""></a></div>
+    </div>
+
+    <div class="panel">
+        <div class="panel_inner w">
+            <!--登录页面-->
+              <div class="login_main">
+                      <div class="form_head">
+                          <a href="" id="mobile_login">手机登录</a>
+                          <span><img src="../../static/front/img/login_shuxian.png" alt="">
+                          </span><a href="">邮箱登录</a>
+                      </div>
+                  <form action="" method="post">
+                        <div class="login_mobile">
+                            <input type="text" placeholder="请输入手机号码" name="mobile">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        </div>
+                        <div class="login_passwd">
+                            <input type="password" placeholder="请输入密码" name="passwd">
+                        </div>
+                        <div class="subs">
+                            <input id="sub-btn" type="submit" value="登录">
+                        </div>
+                  </form>
+                        <div class="second_login">
+                                 <div class="login_img_head">
+                                     <img src="../../static/front/img/login_second_login.png" alt="">
+                                 </div>
+                        </div>
+              </div>
+        </div>
+    </div>
+</nav>
+{#    存放数据是从哪个url点击进入注册页面的url#}
+    <span style="display: none;" id="return_to_span">{{ return_to }}</span>
+
+</body>
+</html>

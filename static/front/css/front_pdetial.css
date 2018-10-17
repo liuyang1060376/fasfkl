@@ -1,0 +1,428 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	list-style: none;
+}
+
+.invitation_con {
+	border: 1px solid #e6e6e6;
+	width: 750px;
+	margin: 26px auto;
+	position: relative;
+	font-size: 14px;
+	font-family: arial,"Microsoft Yahei","Hiragino Sans GB",sans-serif;
+	color: #333;
+	margin-right: 40px;
+}
+
+.invitation_con h1 {
+	width: 660px;
+	height: auto;
+	font-size: 22px;
+	font-weight: 400;
+	line-height: 30px;
+	text-align: left;
+	word-wrap: break-word;
+	word-break: normal;
+	overflow: hidden;
+	max-height: 50px;
+	padding-top: 10px;
+	margin-bottom: 30px;
+}
+
+.invitation_con h1 span {
+	color: #ff8b3d;
+}
+
+.invitation_con .txt {
+	font-size: 12px;
+	color: #8c8c8c;
+	line-height: 14px;
+	padding-bottom: 22px;
+	margin-left: 10px;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.invitation_con .txt .marktxt {
+	color: #ff4c4c;
+	margin-right: 7px;
+}
+
+.invitation_content {
+	font-size: 16px;
+	margin-top: 40px;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+
+.con {
+	border: 1px solid #e6e6e6;
+	padding: 0 19px 25px 29px;
+}
+
+.personLayer {
+	padding-top: 20px;
+}
+
+.personLayer a img {
+	display: block;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	margin: 5px auto;
+	padding: 5px;
+	border: 1px solid #e3e3e3;
+}
+
+.user_msg {
+	padding-top: 8px;
+	text-align: center;
+	line-height: 20px;
+}
+
+.user_msg a {
+	color: #333;
+}
+
+#personal {
+	width: 88px;
+	height: 28px;
+	line-height: 16px;
+	font-size: 12px;
+	margin: 20px 118px;
+	border: 1px solid #ff8b3d;
+	color: #fff;
+	outline: 0;
+	text-decoration: none;
+	background-color: #ff8b3d;
+}
+
+#personal:hover {
+	color: #fff;
+	outline: 0;
+	text-decoration: none;
+	background-color: #ff7519;
+}
+
+.left_wrap {
+	background: #fff;
+	margin-bottom: 15px;
+}
+
+.left_wrap .con {
+	border: 1px solid #e6e6e6;
+	padding: 0 19px 25px 29px;
+}
+
+.left_wrap .hotspot h3 {
+	border-bottom: 1px solid #e6e6e6;
+	margin-bottom: 20px;
+	font-size: 14px;
+	line-height: 26px;
+	padding-bottom: 4px;
+}
+
+.hotspot ul li {
+	width: 200px;
+	color: #333;
+	list-style: inside;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	_zoom: 1;
+	font-size: 12px;
+	line-height: 24px;
+	*margin-left: -16px;
+}
+
+.faster_reply {
+	width: 650px;
+	height: 50px;
+	margin: 69px auto 46px;
+	position: relative;
+}
+
+.faster_reply a img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	float: left;
+}
+
+.faster_reply input {
+	resize: none;
+	outline: 0;
+	float: left;
+	padding: 10px 10px;
+	margin: 0px 10px 0;
+	width: 408px;
+	height: 38px;
+	border: 1px solid #e6e6e6;
+	text-indent: 10px;
+	font-size: 16px;
+}
+
+.faster_reply span {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	margin-bottom: 0;
+	font-size: 14px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #ff8b3d;
+	border: 1px solid #ff8b3d;
+	color: #fff;
+	padding: 0;
+	width: 148px;
+}
+
+.reply {
+	width: 750px;
+	background: #fff;
+	border: 1px solid #e6e6e6;
+	padding-bottom: 35px;
+	margin-left: 0px;
+}
+
+.reply_con {
+	width: 660px;
+	margin: 20px auto 0;
+}
+
+.reply_title {
+	margin-bottom: 10px;
+}
+
+.reply_nav {
+	font-size: 18px;
+	color: #8c8c8c;
+	line-height: 18px;
+}
+
+#select_list {
+	font-size: 18px;
+	color: #ff7519;
+}
+
+.reply_nav a {
+	color: #8c8c8c;
+	font-size: 14px;
+}
+
+.reply li {
+	position: relative;
+	margin-top: 30px;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.reply ul li a img {
+	width: 50px;
+	height: 50px;
+	display: block;
+	border-radius: 50%;
+}
+
+.auth_msg a {
+	margin-right: 5px;
+	font-size: 14px;
+	color: #ff8b3d;
+}
+
+.auth_msg time {
+	width: 21px;
+	height: 12px;
+	margin: 4px 5px 0 0;
+	float: left;
+}
+
+.common_content ul {
+	overflow: hidden;
+}
+
+.common_content ul li {
+	position: relative;
+	margin-top: 30px;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.commer_img img {
+	width: 50px;
+	height: 50px;
+	display: block;
+	border-radius: 50%;
+}
+
+.theme_list {
+	position: relative;
+	padding-top: 16px;
+}
+
+.theme_list_img {
+	width: 50px;
+	float: left;
+	position: relative;
+}
+
+.theme_list_img img {
+	width: 50px;
+	height: 50px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	margin-top: 10px;
+}
+
+.theme_list_con {
+	margin-left: 60px;
+	position: relative;
+}
+
+.common_time {
+	line-height: 20px;
+	font-size: 12px;
+	color: #8c8c8c;
+	position: absolute;
+	left: 52px;
+	top: 2px;
+}
+
+.theme_list_con .title {
+	margin-top: 10px;
+}
+
+.theme_list_con .title a:hover {
+	color: #ff8b3d
+}
+
+.theme_list_con .title a {
+	display: inline-block;
+	width: auto;
+	max-width: 524px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	_zoom: 1;
+	margin-right: 5px;
+	font-size: 14px;
+	color: #ff8b3d;
+}
+
+.title img {
+	margin-left: 5px;
+}
+
+.auth_msg {
+	line-height: 18px;
+	margin: -12px 0 0;
+	padding-bottom: 27px;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.auth_msg a,.auth_msg span {
+	font-size: 12px;
+	color: #8c8c8c;
+	float: left;
+	vertical-align: middle;
+	line-height: 18px;
+}
+
+.see .numb {
+	float: right;
+	_display: inline-block;
+	font-size: 12px;
+	color: #9da5ab;
+	height: 18px;
+	margin-top: -8px;
+	margin-right: 9px;
+}
+
+.numb2 {
+	position: absolute;
+	margin-left: 468px;
+	margin-top: -9px;
+}
+
+.numb i {
+	width: 14px;
+	height: 11px;
+	display: inline-block;
+	margin: -9px 1px 0;
+	vertical-align: middle;
+}
+
+.post-list {
+	margin-left: 13px;
+	margin-top: -13px;
+}
+
+.pagination>li>a {
+	padding: 7px 22px;
+	color: #ff8b3d;
+	;
+}
+
+.pagination>.active>a {
+	background-color: #ff8b3d;
+	border-color: #ff8b3d;
+}
+
+.pagination>.hover>a {
+	background-color: #ff8b3d;
+	border-color: #ff8b3d;
+}
+
+#right {
+	margin-top: 23px;
+	position: absolute;
+	right: 10px;
+	width: 400px;
+	top: 85px;
+	margin-right: 345px;
+}
+
+.uedits {
+	height: 300px;
+	margin: 20px auto;
+}
+
+.reply_area {
+	padding: 30px 0 20px;
+	width: 750px;
+	background: #fff;
+}
+
+#J_reply {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	margin-bottom: 0;
+	font-size: 14px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #ff8b3d;
+	border: 1px solid #ff8b3d;
+	color: #fff;
+	padding: 0;
+	width: 148px;
+}
+
+#J_reply:hover {
+	color: #fff;
+	outline: 0;
+	text-decoration: none;
+	background-color: #ff7519;
+}
+
+.test {
+	margin-top: 54px;
+}

@@ -35,6 +35,7 @@ class CMS_role(db.Model):                   #角色表
     desc=db.Column(db.String(255),nullable=False)           #简介
     role_permission=db.Column(db.Integer,default=Permission.VISITOR)    #角色权限
     create_time=db.Column(db.DateTime,default=datetime.now())           #建立时间
+
     users=db.relationship('CMS_user',secondary=cms_user_role,backref='roles')    #和CMS表建立多对多的关系
 
 class CMS_user(db.Model):     #创建一个CMS用户类（用户名，密码，email,连接时间）
@@ -71,10 +72,10 @@ class CMS_user(db.Model):     #创建一个CMS用户类（用户名，密码，e
                 all_permission|=role.role_permission            #把里面角色进行或运算
             return  all_permission                              #得到最高权限返回
 
-    @property
-    def has_permission(self,permissions):                        #查看用户是否有某个权限
-        return permissions&self.permission==permissions          #把用户的权限和需要的权限对比，如果返回的和他本身相等，则用户有这个权限
 
+    def has_permission(self,permissions):                        #查看用户是否有某个权限
+        return (self.permission & permissions) ==permissions
+        #把用户的权限和需要的权限对比，如果返回的和他本身相等，则用户有这个权限
 
 
 

@@ -1,0 +1,105 @@
+{% from 'common/_macros.html'import static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前台用户注册</title>
+    <link rel="stylesheet" href="{{ static('../../static/front/css/front_regist.css') }}">
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{{ static('front/js/front_regist.js') }}"></script>
+    <script src="{{ static('common/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{ static('common/sweetalert/xtalert.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('common/sweetalert/sweetalert.css') }}">
+
+</head>
+<body>
+<div class="w990">
+    <!--头部分开始-->
+    <div class="header">
+        <div class="logo">
+            <a href="{{ url_for('front.index') }}"><img src="../../static/front/img/regist_logo.png" alt=""></a><span><img src="../../static/front/img/regist_logo1.png" alt=""></span>
+            <a href=""><img src="../../static/front/img/regist_welcome.png" alt=""></a>
+
+        </div>
+        <!--头部分结束-->
+    </div>
+
+    <!--form头-->
+    <div class="title">
+        <ul>
+            <li class="phone"><a href="">手机号注册</a></li>
+            <li class="email"><a href="">邮箱号注册</a></li>
+        </ul>
+        <p class="login-info">我已经注册现在去 <a href="{{ url_for('front.login') }}">登录</a></p>
+    </div>
+    <!--form头结束-->
+
+    <!--form page开始-->
+    <div class="form-box">
+    <form class="form-list" action="" method="post">
+        <!--用户名-->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div id="nameDiv">
+            <span id="red_username">
+                <label>用户名：</label>
+            </span>
+            <input type="text" name="username">
+        </div>
+        <!--密码-->
+        <div id="passwdDiv">
+            <span id="red_passwd">
+                <label>设置密码：</label>
+            </span>
+            <input type="password" name="passwd">
+        </div>
+        <!--确认密码-->
+        <div id="repasswdDiv">
+            <span id="red_repasswd">
+                <label>确认密码：</label>
+            </span>
+            <input type="password" name="repasswd">
+        </div>
+        <!--手机号码-->
+        <div id="mobileDiv">
+            <span id="red_mobile">
+                <label>手机号码:</label>
+            </span>
+            <input type="text" name="mobile">
+        </div>
+        <!--短信验证码-->
+        <div id="verifycodeDiv">
+            <span id="red_verifycode">
+                <label>短信验证码:</label>
+            </span>
+            <input type="text" name="verifycode">
+            <div id="check_border">
+                <input id="get_verfiy_code" type="button" value="获取短信验证码">
+            </div>
+        </div>
+        <!--图像验证码-->
+        <div id="imgverifycodeDiv">
+            <span id="red_imgverifycode">
+                <label>图形验证码:</label>
+            </span>
+            <input type="text" name="imgverifycode">
+            <div id="img_code">
+                <img id="img_verify_code" src="{{ url_for('common.refreshcode') }}" alt="图形验证码">
+            </div>
+        </div>
+        <!--提交按钮-->
+        <div class="reg-btn">
+            <input id="registnow" type="submit" value="立即注册" >
+        </div>
+    </form>
+{#        图片#}
+        <div id="robot">
+            <img src="../../static/front/img/regist_robot.png" alt="">
+        </div>
+    </div>
+    <!--form end-->
+
+{#    存放数据是从哪个url点击进入注册页面的url#}
+    <span style="display: none;" id="return_to_span">{{ return_to }}</span>
+</div>
+</body>
+</html>

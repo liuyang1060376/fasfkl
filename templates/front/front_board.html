@@ -1,0 +1,176 @@
+{% extends 'front/front_index_base.html' %}
+
+{% block title %}
+    板块
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_board.css') }}">
+    <script src="{{ static('front/js/front_board.js') }}"></script>
+{% endblock %}
+
+{% block page_content %}
+
+<div class="row">
+    <!--左侧-->
+    <div class="col-md-8" style="margin-top: 30px;">
+        <div class="title-box">
+            <div class="avatar">
+                <img src="{{board.img_url }}" alt="">
+            </div>
+            <div class="title_right">
+                <div id="board_title">{{ board.name }}</div>
+                <div id="info">收录了 <span>5</span>篇文章·<span>13423</span>人关注</div>
+            </div>
+            <a href="{{ url_for('front.apost') }}"><div class="addpost">投稿</div></a>
+            <div class="Focus">关注</div>
+        </div>
+        <div class="test"></div>
+
+        <div class="title_select">
+            <div class="title_select_inner title_select_xanzhong">
+                <a href="">全部帖子</a>
+            </div>
+            <div class="title_select_inner">
+                <a href="">精华帖</a>
+            </div>
+            <div class="title_select_inner">
+                <a href="">热门帖</a>
+            </div>
+            <div class="title_select_inner">
+                <a href="">待讨论</a>
+            </div>
+        </div>
+
+{#    帖子列表#}
+<div class="theme">
+    <div class="theme_con">
+        <ul class="post-list">
+            {% for post in posts %}
+            <li class="theme_list">
+                <!--头像-->
+                <div class="theme_list_img">
+                    {% if post.author.avatar %}
+                    <a href=""><img src="{{ post.author.avatar }}" alt=""></a>
+                    {% else %}
+                {#使用默认头像#}
+                    <a href=""><img src="../../static/front/img/avatar.jpg" alt=""></a>
+                    {% endif %}
+                </div>
+                <!--标题-->
+                <div class="theme_list_con">
+                    <div class="title">
+                        <a class="return_pdetial" post-id="{{ post.id }}" href="{{ url_for('front.pdetial') }}">
+                            {{ post.title|truncate(length=15) }}</a>
+{# 加精图标#}             {% if post.isgood %}
+                        <div id="goodpost">精</div>
+                        {% endif%}
+                    </div>
+                    <!--发布时间-->
+                    <div  class="auth_msg">
+                        <a href="">{{ post.author.username }}·</a>
+                        <span>{{ post.create_time }}·</span>
+                        <span>{{ board.name }}</span>
+                        <p class="see">
+                            <span class="numb">
+                                <i></i>
+                                6444
+                            </span>
+
+                        </p>
+                        <p class="see">
+                            <span class="numb">
+                                <i></i>
+                                6444
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+              <div style="text-align: center">{{ pagination.links }}</div>
+         </div>
+    </div>
+</div>
+
+
+
+
+    <!--右侧-->
+    <div class="col-md-3">
+        <p class="title">专题公告</p>
+        <div class="collection">
+            <p>{{ board.notice }}</p>
+        </div>
+        <br />
+        <hr />
+
+
+
+        <!--管理员-->
+        <div>
+            <p class="manager">管理员</p>
+            <ul>
+                <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                    <span class="tag">创造者</span>
+                </li>
+                <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>  <li>
+                    <a class="author" href="">
+                        <img src="" alt="">
+                    </a>
+                    <a class="name" href="">简书</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

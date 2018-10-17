@@ -13,7 +13,6 @@ $(function () {
         }else{
             that.parent().addClass('unfold').siblings().removeClass('unfold');
         }
-        console.log('coming....');
     });
 
     $('.nav-sidebar a').mouseleave(function () {
@@ -24,41 +23,32 @@ $(function () {
 
 $(function () {
     var url = window.location.href;
-    if(url.indexOf('profile') >= 0){
+    if(url.indexOf('profile') >= 0){  //个人中心
         var profileLi = $('.profile-li');
         profileLi.addClass('unfold').siblings().removeClass('unfold');
         profileLi.children('.subnav').children().eq(0).addClass('active').siblings().removeClass('active');
-    } else if(url.indexOf('resetpwd') >= 0){
+    } else if(url.indexOf('resetpwd') >= 0){  //重置密码
         var profileLi = $('.profile-li');
         profileLi.addClass('unfold').siblings().removeClass('unfold');
         profileLi.children('.subnav').children().eq(1).addClass('active').siblings().removeClass('active');
-    } else if(url.indexOf('resetemail') >= 0){
+    } else if(url.indexOf('resetemail') >= 0){ //重置邮箱
         var profileLi = $('.profile-li');
         profileLi.addClass('unfold').siblings().removeClass('unfold');
         profileLi.children('.subnav').children().eq(2).addClass('active').siblings().removeClass('active');
-    } else if(url.indexOf('posts') >= 0){
+    } else if(url.indexOf('post') >= 0){  //帖子管理
         var postManageLi = $('.post-manage');
         postManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('boards') >= 0){
+    }else if(url.indexOf('boarder') >= 0) { //板块管理
         var boardManageLi = $('.board-manage');
         boardManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('permissions') >= 0){
-        var permissionManageLi = $('.permission-manage');
-        permissionManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('roles') >= 0){
-        var roleManageLi = $('.role-manage');
-        roleManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('users') >= 0){
-        var userManageLi = $('.user-manage');
-        userManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('cmsuser_manage') >= 0){
+    } else if(url.indexOf('cmsuser') >= 0){ //cms管理
         var cmsuserManageLi = $('.cmsuser-manage');
         cmsuserManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('cmsrole_manage') >= 0){
-        var cmsroleManageLi = $('.cmsrole-manage');
-        cmsroleManageLi.addClass('unfold').siblings().removeClass('unfold');
-    }else if(url.indexOf('comments') >= 0) {
-        var commentsManageLi = $('.comments-manage');
-        commentsManageLi.addClass('unfold').siblings().removeClass('unfold');
+    }else if(url.indexOf('front') >= 0){ //板块管理
+        var userManageLi = $('.user-manage');
+        userManageLi.addClass('unfold').siblings().removeClass('unfold');
+    }else if(url.indexOf('banner') >= 0){ //轮播图
+        var bannerManageLi = $('.banner-manage');
+        bannerManageLi.addClass('unfold').siblings().removeClass('unfold');
     }
 });

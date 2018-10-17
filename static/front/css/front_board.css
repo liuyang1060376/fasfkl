@@ -1,0 +1,306 @@
+.avatar {
+	float: left;
+	width: 80px;
+	height: 80px
+}
+
+.avatar img {
+	border-radius: 50%;
+	overflow: hidden;
+	margin-left: -14px;
+	margin-top: -11px;
+	width: 80px;
+	height: 80px;
+}
+
+#board_title {
+	font-size: 21px;
+	font-weight: 700;
+	color: #2f2f2f;
+	position: absolute;
+	left: 3px;
+	top: -18px;
+}
+
+#info {
+	margin-top: 13px;
+	font-size: 14px;
+	color: #969696;
+	padding-top: 16px;
+	padding-left: 4px;
+}
+
+.addpost {
+	width: 90px;
+	font-size: 15px;
+	border: 1px solid rgba(59,194,29,.7);
+	color: #42c02e !important;
+	font-weight: 400;
+	line-height: 39px;
+	border-radius: 40px;
+	background: none;
+	text-align: center;
+	cursor: pointer;
+	position: absolute;
+	left: 647px;
+	top: 23px;
+	height: 39px;
+}
+
+.addpost:hover {
+	color: #8c8c8c;
+	text-decoration: none;
+}
+
+.Focus {
+	float: right;
+	font-size: 15px;
+	border-color: #42c02e;
+	font-weight: 400;
+	border-radius: 40px;
+	color: #fff;
+	background-color: #42c02e;
+	width: 90px;
+	line-height: 39px;
+	text-align: center;
+	height: 39px;
+	position: absolute;
+	left: 540px;
+	top: 23px;
+}
+
+.title-box {
+	position: absolute;
+}
+
+.title {
+	margin-bottom: 10px;
+	font-size: 14px;
+	color: #969696;
+	margin-top: 20px;
+}
+
+.manager {
+	margin-bottom: 10px;
+	font-size: 14px;
+	color: #969696;
+	margin-top: 20px;
+}
+
+.collection {
+	text-align: left;
+	font-size: 14px;
+}
+
+.tag {
+	padding: 1px 3px;
+	margin-left: 2px;
+	border-radius: 3px;
+	font-size: 12px;
+	color: #969696;
+	border: 1px solid #969696;
+}
+
+.name {
+	position: relative;
+	max-width: 236px;
+	vertical-align: middle;
+	top: 1px;
+	font-size: 14px;
+	color: #333;
+}
+
+.author {
+	margin-right: 5px;
+	width: 32px;
+	height: 32px;
+	color: #3194d0;
+}
+
+.author img {
+	border: 1px solid #ddd;
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+}
+
+.title_right {
+	position: relative;
+	margin-left: 95px;
+	margin-top: 20px;
+}
+
+.test {
+	width: 100%;
+	height: 105px;
+}
+
+.title_select {
+	width: 100%;
+	color: #333;
+}
+
+.title_select_xanzhong {
+	border-bottom: 3px solid #0072eb;
+	box-sizing: border-box;
+	color: #000;
+	font-weight: 500;
+}
+
+.title_select_inner {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: right;
+	margin-right: 34px;
+	padding: 0 6px;
+	height: 48px;
+	line-height: 48px;
+	font-size: 14px;
+}
+
+.title_select_inner a {
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: 500;
+	text-align: right;
+	line-height: 48px;
+	font-size: 14px;
+}
+
+#page {
+	width: 100%;
+	background-color: white;
+	border: 1px solid white;
+}
+
+        /*帖子列表*/
+.theme {
+	width: 750px;
+	height: 100%;
+	background: #fff;
+	border: 1px solid #e6e6e6;
+	font-size: 14px;
+	font-family: arial,"Microsoft Yahei","Hiragino Sans GB",sans-serif;
+	color: #333;
+}
+
+.theme_con {
+	margin: 20px 30px;
+}
+
+.theme_list {
+	position: relative;
+	padding-top: 16px;
+}
+
+.theme_list_img {
+	width: 50px;
+	float: left;
+	position: relative;
+}
+
+.theme_list_img img {
+	width: 50px;
+	height: 50px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	margin-top: 10px;
+}
+
+.theme_list_con {
+	margin-left: 60px;
+}
+
+.theme_list_con .title {
+	margin-top: 10px;
+}
+
+.theme_list_con .title a:hover {
+	color: #ff8b3d
+}
+
+.theme_list_con .title a {
+	display: inline-block;
+	width: auto;
+	max-width: 524px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	_zoom: 1;
+	color: #333;
+	font-size: 16px;
+}
+
+.title img {
+	margin-left: 5px;
+}
+
+.auth_msg {
+	line-height: 18px;
+	margin: -12px 0 0;
+	padding-bottom: 27px;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.auth_msg a,.auth_msg span {
+	font-size: 12px;
+	color: #8c8c8c;
+	float: left;
+	vertical-align: middle;
+	line-height: 18px;
+}
+
+.see .numb {
+	float: right;
+	_display: inline-block;
+	font-size: 12px;
+	color: #9da5ab;
+	height: 18px;
+	margin-top: 3px;
+	margin-right: 9px;
+}
+
+.numb i {
+	width: 14px;
+	height: 11px;
+	display: inline-block;
+	margin: -9px 1px 0;
+	vertical-align: middle;
+}
+
+.post-list {
+	margin-left: -21px;
+	margin-top: -13px;
+}
+
+.pagination>li>a {
+	padding: 7px 22px;
+	color: #ff8b3d;
+	;
+}
+
+.pagination>.active>a {
+	background-color: #ff8b3d;
+	border-color: #ff8b3d;
+}
+
+.pagination>.hover>a {
+	background-color: #ff8b3d;
+	border-color: #ff8b3d;
+}
+
+#goodpost {
+	background-color: #fa8429;
+	display: inline-block;
+	vertical-align: middle;
+	padding: 3px;
+	margin-right: 6px;
+	font-size: 12px;
+	line-height: 10px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #fff;
+	margin-top: -16px;
+}

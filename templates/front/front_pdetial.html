@@ -1,0 +1,168 @@
+{#帖子详情#}
+{% extends 'front/front_index_base.html' %}
+{% block title %}
+    帖子详情
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_pdetial.css') }}">
+    <script src="{{ static('front/js/front_pdetial.js') }}"></script>
+    <script src="{{ static('common/lqiniu.js') }}"></script>
+     <script src="{{ url_for('static',filename="ueditor/ueditor.config.js") }}"></script>
+    <script src="{{ url_for('static',filename="ueditor/ueditor.all.js") }}"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ url_for('static',filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+{% endblock %}
+{% block page_content %}
+     <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+<div class="row">
+    <div id="left" class="col-md-8">
+        <div class="invitation_con">
+            <h1>
+                <span>【{{ post.board.name }}】{{ post.title }}</span>
+            </h1>
+            <p class="txt">
+                <span class="marktxt">精华</span>
+                <span>发表于</span>
+                <span>{{ post.create_time }}</span>
+                <a href=""><span>{{ post.board.name }}</span></a>
+            </p>
+            <!--正文部分-->
+            <div class="invitation_content">
+                {{ post.content|safe }}
+            </div>
+
+
+            <!--评论-->
+            <div class="faster_reply">
+                <a href="">
+
+{#如果当前用户登录，且有头像，则用当前用户的头像，否则则用默认的头像#}
+{#  当前用户头像#}
+                    {% if g.front_user and g.front_user.avatar %}
+                    <img src="{{ g.front_user.avatar }}" alt="当前登录用户头像">
+                    {% else %}
+                    <img src="../../static/front/img/avatar.jpg" alt="">
+                    {% endif %}
+
+                </a>
+                <input type="text" placeholder="说说的你看法">
+                <span>发表</span>
+            </div>
+        </div>
+        <!--评论区域-->
+            <div class="reply">
+                <div class="reply_con">
+                    <!--评论标题-->
+                    <div class="reply_title">
+                        <span class="reply_nav">
+                            <a id="select_list" href="">最新评论</a>
+                            <a href="">正序排列</a>
+                        </span>
+                    </div>
+                    <!--评论标题结束-->
+
+
+
+
+                    <!--评论开始-->
+                    <ul class="post-list">
+{#遍历这个帖子下的所有评论#}
+                        {% for commen in post.commens %}
+                        <li class="theme_list">
+                            <!--评论者的头像-->
+                            <div class="theme_list_img">
+                                <a href="">
+{#如果评论者有头像，则显示评论者头像，否则显示默认头像 #}
+                                    {% if commen.author.avatar %}
+                                    <img src="{{ commen.author.avatar }}" alt="评论者头像">
+                                    {% else %}
+                                    <img src="../../static/front/img/avatar.jpg" alt="">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="theme_list_con">
+                                <div class="title">
+{#评论者名称#}
+                                    <a href="">{{ commen.author.username }}</a>
+{#后期加精品图标#}
+                                    <img src="" alt="">
+{#评论时间#}
+                                    <span class="common_time">{{ commen.create_time }}</span>
+                                </div>
+{#评论内容#}
+                                {{ commen.content|safe }}
+                                <p class="see">
+                                  <span class="numb">
+                                        <i></i>
+                                      回复
+                                    </span>
+
+                                </p>
+                                <div  class="auth_msg">
+
+                                    <p class="see">
+                                        <a href=""><span class="numb2 like" data-commen-id="{{ commen.id }}">
+                                                <i></i>
+                                            点赞{{ commen.likes|length }}
+                                         </span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                     <!--评论结束-->
+                    </div>
+                <div>
+            </div>
+         </div>
+        {#底部评论#}
+        <div class="reply_area">
+           <script type="text/plain" id="editor" class="uedits" >
+            </script>
+        </div>
+        <div class="test"><span  id="J_reply" post-id="{{ post.id }}">回复</span></div>
+    </div>
+
+</div>
+       <!--右侧区域-->
+    <div id="right" class="col-md-4">
+        <div class="con">
+            <div class="personLayer">
+                <!--用户头像-->
+                <a href="">
+                    {% if post.author.avatar %}
+                    <img src="{{ post.author.avatar }}" alt="">
+                    {% else %}
+                    <img src="../../static/front/img/avatar.jpg" alt="">
+                    {% endif %}
+                </a>
+                <div class="user_msg">
+                    <span>
+                    <a href="">{{ post.author.username }}</a>
+                        <!--后期可以加图标-->
+                    <i></i>
+                    </span>
+                </div>
+                <a class="btn" id="personal" href="">他的主页</a>
+            </div>
+        </div>
+        <div class="left_wrap">
+            <div class="con">
+                <div class="hotspot">
+                    <h3>楼主的最近发表</h3>
+                    <ul>
+                        {% if recent_post %}
+                        {% for post in recent_post %}
+                        <li>
+                            <a href="">{{ post.title }}</a>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li><p>该用户最近没有发表文章</p></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

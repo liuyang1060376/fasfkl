@@ -1,0 +1,158 @@
+{% extends 'front/front_index_base.html' %}
+{% block title %}
+个人中心
+{% endblock %}
+{% block head %}
+    <script src="{{ static('front/js/front_personal.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('front/css/front_personal.css') }}">
+{% endblock %}
+{% block page_content %}
+  <div class="personal-box w">
+        <!--左侧-->
+        <div class="personal-left fl">
+            <div class="user-left-head">
+                <span><img src="https://himg.bdimg.com/sys/portrait/item/e16b597f" alt=""></span>
+                <div class="username">
+                    {{ user.username }}
+                </div>
+                <div class="huifu">
+                    <div class="fl"><span>{{ posts|length }}</span>帖子</div>
+                    <div class="fr"><span>0</span>回复</div>
+                </div>
+                <div class="live">
+                    获赞 <span>30</span>
+                </div>
+                <ul class="tag-list">
+                    <li class="cur3">我的动态</li>
+                    <li>我的收藏</li>
+                    <li>我的资料</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!--我的帖子以及回复-->
+        <div class="personal-right fr">
+            <div class="personal-right-head">
+                <a id="my-post" href=""><span class="cur2">我的帖子</span></a>
+                <a id="my-reply" href=""><span>我的回复</span></a>
+            </div>
+            <!--我的帖子-->
+            {% for post in posts %}
+            <div class="my-post">
+                <span class="item-title">{{ post.title }}</span>
+                <span class="item-time">发布于<span>{{ post.create_time }}</span>分钟前</span>
+            </div>
+            {% endfor %}
+
+
+            <!--我的回复-->
+            <div class="my-reply"  style="display: none;">
+                <span class="item-title">评论人</span>
+                <span class="item-time">评论于14分钟前</span>
+                <span class="item-content">评论内容</span>
+            </div>
+        </div>
+        <!--我的收藏-->
+        <div class="personal-right fr" style="display: none;">
+            <div class="personal-right-head">
+                <a href=""><span class="cur2">我的收藏</span></a>
+            </div>
+            <!--我的帖子-->
+            <div class="my-post">
+                <img src="https://ai.bdstatic.com/file/B4D2C0D00D4345AC903C253AC71E50B2" alt="">
+                <div class="board-name">板块</div>
+                <button class="btn btn-danger">取消关注</button>
+            </div>
+        </div>
+
+        <!--个人资料-->
+        <div class="personal-right fr" style="display: none;">
+            <div class="personal-right-head">
+                <a href="" id="my-base"><span class="cur2">基本资料</span></a>
+                <a href="" id="my-passwd"><span>修改密码</span></a>
+            </div>
+            <!--我的帖子-->
+            <div class="my-message">
+                <table class="table table-bordered" >
+                    <tr>
+                        <td>用户名</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>手机号</td>
+                        <td>{{ user.telephone }}</td>
+                    </tr> <tr>
+                        <td>真实姓名</td>
+                        <td>{{ user.realname }}</td>
+                    </tr> <tr>
+                        <td>性别</td>
+                        <td>{{ user.gender }}</td>
+                    </tr> <tr>
+                        <td>创建时间</td>
+                        <td>{{ user.join_time }}</td>
+                    </tr>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">修改</button>
+                </table>
+            </div>
+            <!--修改密码-->
+            <div class="my-password" style="display: none;">
+                <form action="" method="post">
+                    <!--email输入部分-->
+                    <div id="input_email">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <span></span><input type="text" name="email" placeholder="请输入邮箱账号">
+                    </div >
+                    <!--验证码输入部分-->
+                    <div class="input_code">
+                        <div class="code"><input type="text" name="code" placeholder="请输入验证码"></div>
+                        <div class="get"><input id="get_code" type="button" value="获取验证码"></div>
+                    </div>
+                    <!--修改按钮部分-->
+                    <div>
+                        <button  id="xiugai">立即修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!--基本资料修改模态框-->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div><div class="form-group">
+                            <label for="recipient-name" class="control-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div><div class="form-group">
+                            <label for="recipient-name" class="control-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div><div class="form-group">
+                            <label for="recipient-name" class="control-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

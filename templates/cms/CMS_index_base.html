@@ -51,15 +51,26 @@
                         <li><a href="{{ url_for("cms.resetemail") }}">修改邮箱</a></li>
                     </ul>
                 </li>
-                <li class="nav-group post-manage"><a href="#">帖子管理</a></li>
-                <li class="comments-manage"><a href="#">评论管理</a></li>
-                <li class="board-manage"><a href="#">板块管理</a></li>
+                    {% set cms_user=g.cms_user %}
+{#              如果用户有帖子管理权限则显示帖子管理#}
+                  {% if cms_user.has_permission(Permission.POSTER) %}
+                    <li class="nav-group post-manage"><a href="{{ url_for('cms.post') }}">帖子管理</a></li>
+                  {% endif %}
+{#              如果用户有评论管理权限，则显示评论管理#}
+                    {% if cms_user.has_permission(Permission.COMMENTER) %}
+                <li class="comments-manage"><a href="{{ url_for('cms.commen') }}">评论管理</a></li>
+                    {% endif %}
+              {% if cms_user.has_permission(Permission.BOARDER) %}
+                <li class="board-manage"><a href="{{ url_for('cms.boarder') }}">板块管理</a></li>
+                <li class="banner-manage"><a href="{{ url_for('cms.banner') }}">轮播图管理</a></li>
 
-                <li class="nav-group user-manage"><a href="#">用户管理</a></li>
-                <li class="role-manage"><a href="#">组管理</a></li>
-
-                <li class="nav-group cmsuser-manage"><a href="#">CMS用户管理</a></li>
-                <li class="cmsrole-manage"><a href="#">CMS组管理</a></li>
+                {% endif %}
+              {% if cms_user.has_permission(Permission.FRONTUSER) %}
+                <li class="nav-group user-manage"><a href="{{ url_for('cms.front') }}">前台用户管理</a></li>
+              {% endif %}
+                  {% if cms_user.has_permission(Permission.CMSUSER) %}
+                <li class="nav-group cmsuser-manage"><a href="{{ url_for('cms.cmsuser') }}">CMS用户管理</a></li>
+                      {% endif %}
             </ul>
           </div>
           <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

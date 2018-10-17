@@ -1,0 +1,35 @@
+{% extends 'front/front_index_base.html' %}
+{% block title %}
+搜索页面
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_search.css') }}">
+    <script src="{{ static('front/js/front_search.js') }}"></script>
+{% endblock %}
+
+{% block page_content %}
+    <div class="search-main-box">
+        <div class="search-header-box">
+            <input type="text" value="{{ content }}" name="content">
+            <a href="/search/" id="search_go">搜索</a>
+        </div>
+        <div class="search-tishi">
+            关于 <span>{{ content }}</span>的搜索共<span>{{ posts|length }}</span>条
+        </div>
+
+
+        <!--搜索内容-->
+        <div class="search-content">
+            <ul>
+                {% for post in posts %}
+                <li>
+                    <a href="/pdetial/" post-id="{{ post.id }}" class="open_post">{{ post.title }}</a>
+                    <div class="public-time">{{ post.create_time }}</div>
+                    <div class="article-conten">{{ post.content }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

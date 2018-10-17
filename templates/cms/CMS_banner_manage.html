@@ -1,0 +1,119 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% from './common/_macros.html' import static %}
+{% block title %}
+轮播图管理
+{% endblock %}
+{% block head %}
+    <script src="{{ static('cms/js/cms_banner.js') }}"></script>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.dev.js"></script>
+    <script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+    <script src="{{ static('common/lqiniu.js') }}"></script>
+{% endblock %}
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+{% block main_content %}
+
+
+    {#    添加轮播图按钮#}
+    <div class="row">
+    <div class="col-md-1 col-md-offset-11">
+        <button class="btn btn-warning" data-toggle="modal" style="margin-left: -11px" data-target="#banner_dialog"> 添加轮播图</button>
+    </div>
+</div>
+{#    添加轮播图按钮结束#}
+
+
+{#    轮播图列表#}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>轮播图名称</th>
+                <th>图片链接地址</th>
+                <th>图片跳转地址</th>
+                <th>创建时间</th>
+                <th>优先级</th>
+                <th>操作</th>
+            </tr>
+                    {#遍历输出banner里面的参数#}
+            {% for banner in banners %}
+                    {#把banner里面的信息获取到tr里面的属性，为了后期对banner的信息进行管理使用#}
+            <tr data-name='{{ banner.name }}' data-img={{ banner.img_url }} data-link={{ banner.link_url }} data-priority={{ banner.priority }}  data-id={{ banner.id }}>
+                <td>{{ banner.name }}</td>
+                <td><a href="{{ banner.img_url }}" target='_blank'>{{ banner.img_url }}</a></td>
+                <td><a href="{{ banner.link_url }}" target="_blank">{{ banner.link_url }}</a></td>
+                <td>{{ banner.create_time }}</td>
+                <td>{{ banner.priority }}</td>
+                <td>
+                    <button class="btn-success btn edit_banner_btn"
+                            data-toggle="modal" data-target="#banner_dialog">编辑</button>
+                    <button class="btn btn-danger del-banner">删除</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{#轮播图列表结束#}
+
+
+
+{#    banner弹出框#}
+    <!-- Modal -->
+<div class="modal fade" id="banner_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <!--inner-->
+                <form class="form-horizontal">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" types="123">
+                    <!--名称-->
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="轮播图名称">
+                        </div>
+                    </div>
+
+                    <!--图片-->
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">图片</label>
+                        <div class="col-sm-8 ">
+                            <input type="text" name="img_url" class="form-control" id="inputPassword3" placeholder="轮播图图片">
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="select_img" class="btn btn-success" style="border-radius: 18px;margin-left: -12px" >选择图片</button>
+                        </div>
+                    </div>
+
+                    <!--跳转-->
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">跳转</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="link_url" class="form-control" id="inputPassword4" placeholder="跳转链接">
+                        </div>
+                    </div>
+                    <!--权重-->
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">优先级</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="priority" class="form-control" id="inputPassword5" placeholder="优先级">
+                        </div>
+                    </div>
+                     <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="submit-btn" type="button" class="btn btn-primary">保存</button>
+            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+     <!--banner弹出框结束-->
+{% endblock %}

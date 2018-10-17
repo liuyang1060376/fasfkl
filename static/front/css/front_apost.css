@@ -1,0 +1,57 @@
+#title {
+	margin: 30px 0;
+}
+
+#aticle-content {
+	margin-top: 20px;
+}
+
+#select-board {
+	margin-top: 30px;
+}
+
+#article-title {
+	background-color: #ea6f5a;
+	color: ghostwhite;
+}
+
+#select-board-label {
+	margin-top: 38px;
+	padding-right: 9px;
+}
+
+.verify-code input {
+	box-sizing: border-box;
+	width: 139px;
+	height: 38px;
+	font-size: 14px;
+	line-height: 40px;
+	text-indent: 10px;
+	outline: 0;
+}
+
+.verify-img {
+	width: 38px;
+	height: 90px;
+}
+
+#verifycode-box {
+	margin-top: 30px;
+}
+
+#addpost {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	margin-bottom: 0;
+	font-size: 14px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #ff8b3d;
+	border: 1px solid #ff8b3d;
+	color: #fff;
+	padding: 0;
+	width: 148px;
+}

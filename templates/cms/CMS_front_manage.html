@@ -1,0 +1,36 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% block title %}
+前台用户管理
+{% endblock %}
+{% block head %}
+    <script src="{{ static('cms/js/cms_front_manage.js') }}"></script>
+{% endblock %}
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+{% block main_content %}
+
+<table class="table table-bordered success">
+<input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+    <tr class="warning">
+        <th>用户名</th>
+        <th>手机号</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    {% for user in users %}
+    <tr class="info" data-user-id="{{ user.id }}">
+        <td>{{ user.username }}</td>
+        <td>{{ user.telephone }}</td>
+        <td>{{ user.join_time }}</td>
+        <td>
+            {% if user.is_delete %}
+            <button class="btn btn-success calcelblock">恢复登录</button>
+            {% else %}
+            <button class="btn btn-danger blockuser">加入黑名单</button>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

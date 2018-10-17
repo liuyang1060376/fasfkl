@@ -1,0 +1,20 @@
+*{                      /*去除默认边距*/
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+i{
+    font-style: normal;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+ul{
+    text-decoration: none;
+}

@@ -1,0 +1,56 @@
+{#帖子发布界面#}
+{% extends 'front/front_index_base.html' %}
+{% block title %}
+发布文章
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_apost.css') }}">
+    <script src="{{ url_for('static',filename="ueditor/ueditor.config.js") }}"></script>
+    <script src="{{ url_for('static',filename="ueditor/ueditor.all.js") }}"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ url_for('static',filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+    <script src="{{ static('front/js/front_apost.js') }}"></script>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row"></div>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{#标题#}
+    <div class="row">
+        <div class="col-md-6">
+             <div class="input-group" id="title">
+                <div id="article-title" class="input-group-addon">标题</div>
+                <input type="text" class="form-control" id="exampleInputAmount" placeholder="请输入标题" name="title">
+            </div>
+        </div>
+{#选择板块下拉菜单#}
+        <div class="col-md-1 col-md-offset-1">
+             <label id="select-board-label">板块选择</label>
+        </div>
+        <div class="col-md-4">
+        <select id="select-board" name="select-board" class="form-control success">
+            {% for board in boards %}
+            <option value="{{ board.id }}">{{ board.name }}</option>
+            {% endfor %}
+        </select>
+        </div>
+    </div>
+
+{#    editor输入区域#}
+    <div id="aticle-content">
+       <script id="editor" type="text/plain" style= "height:500px; width: 100%;"></script>
+    </div>
+{#验证码区域#}
+    <div id="verifycode-box" class="row">
+        <div class="col-md-2 verify-code">
+            <input type="text" name="img-code" placeholder="请输入验证码">
+        </div>
+        <div class="col-md-2 verify-img">
+            <img id="search-img-code" src="{{ '/common/refreshcode/' }}" alt="图片">
+        </div>
+    </div>
+    {#发布按钮#}
+    <div><span id="addpost">发表帖子</span></div>
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% block title %}
+帖子管理
+{% endblock %}
+{% block head %}
+    <script src="{{ static('cms/js/cms_post_manage.js') }}"></script>
+{% endblock %}
+
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+{% block main_content %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<table class="table table-bordered">
+    <tr>
+        <th>标题</th>
+        <th>发布时间</th>
+        <th>发布板块</th>
+        <th>作者</th>
+        <th>操作</th>
+    </tr>
+{#遍历输出所有的帖子#}
+    {% for post in posts %}
+{#方便对帖子进行加精删除#}
+    <tr data-post-id="{{ post.id }}">
+        <td>{{ post.title }}</td>
+        <td>{{ post.create_time }}</td>
+        <td>{{ post.board.name }}</td>
+        <td>{{ post.author.username }}</td>
+        <td>
+            {% if post.isgood %}
+            <button class="btn btn-warning notgood">取消加精</button>
+            {% else %}
+            <button  class="btn btn-success setgood">加精</button>
+            {% endif %}
+            <button class="btn btn-danger delpost">删除</button></td>
+    </tr>
+    {% endfor %}
+</table>
+    <div style="text-align: center">{{ pagination.links }}</div>
+{% endblock %}

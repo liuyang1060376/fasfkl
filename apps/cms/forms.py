@@ -1,5 +1,6 @@
 from wtforms import Form,StringField,IntegerField
 from wtforms.validators import Length,Email,InputRequired,EqualTo,ValidationError
+from apps.models import PostModel
 from utils.memcached import mc
 from flask import g
 
@@ -27,3 +28,46 @@ class Cms_resetemail_verify(Form):  #邮箱验证码格式验证
         email=g.cms_user.email
         if field.data==email:  #如果用户输入的邮箱的邮件名称和原来的邮箱一样
             raise ValidationError('您的邮箱和原始邮箱不能同名')
+
+class Add_banner_verify(Form):      #添加banner图验证
+    name=StringField(validators=[InputRequired(message='请输入Banner名称')])
+    img_url=StringField(validators=[InputRequired(message='请输入图片链接地址')])
+    link_url=StringField(validators=[InputRequired(message='请输入图片跳转地址')])
+    priority=IntegerField(validators=[InputRequired(message='请输入优先级')])
+
+class Update_banner_verify(Add_banner_verify):   #更新banner图验证
+    id=IntegerField(validators=[InputRequired()])
+
+
+class Add_boarder_verify(Form):        #添加板块验证
+    name=StringField(validators=[InputRequired(message='请输入板块名称')])
+    img_url=StringField(validators=[InputRequired(message='请输入图片链接地址')])
+    intr=StringField(validators=[InputRequired(message='请输入板块简介')])
+    notice=StringField(validators=[InputRequired(message='请输入公告信息')])
+
+class Update_boarder_verify(Add_boarder_verify):        #修改板块验证
+    id=IntegerField(validators=[InputRequired(message='获取板块ID错误')])
+
+class Agoodpost_verify(Form):                           #设置帖子为精品贴验证
+    id=IntegerField(validators=[InputRequired(message='帖子不存在')])
+    def validate_id(self,field):
+        id=field.data
+        post=PostModel.query.filter_by(id=id).first()  #查找数据库中是否有这篇帖子
+        if not post:
+            raise ValidationError(message='该帖子不存在')
+
+class Delgoodpost_verify(Form):                           #取消设置帖子为精品贴验证
+    id=IntegerField(validators=[InputRequired(message='帖子不存在')])
+    def validate_id(self,field):
+        id=field.data
+        post=PostModel.query.filter_by(id=id).first()  #查找数据库中是否有这篇帖子
+        if not post:
+            raise ValidationError(message='该帖子不存在')
+
+class Delpost_verify(Form):                           #删除帖子
+    id=IntegerField(validators=[InputRequired(message='帖子不存在')])
+    def validate_id(self,field):
+        id=field.data
+        post=PostModel.query.filter_by(id=id).first()  #查找数据库中是否有这篇帖子
+        if not post:
+            raise ValidationError(message='该帖子不存在')

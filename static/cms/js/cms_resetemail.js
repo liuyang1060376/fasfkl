@@ -32,6 +32,7 @@ $(function () {
     //获取邮箱验证码  //
     $('#get_code').on('click',function (event) {    // //cms更改邮箱发送验证码
         event.preventDefault();  //阻止表单的默认事件
+        var self=$(this);
         var count=60;
         var email=$("input[name=email]").val();      //获取邮箱账号
         var csrf_token=$('input[name=csrf_token]').val(); //获取csrf_token()
@@ -46,6 +47,19 @@ $(function () {
             success:function (data) {
                 if(data['code']===200){
                     xtalert.alertSuccessToast('验证码发送成功');
+                    self.attr('disabled','disabled');
+                    var counttime=60;
+                    var timer=setInterval(function () {
+                        count=count-1;
+                        self.attr('disabled',true);
+                        console.log(count);
+                        self.val(count);
+                        console.log('执行到text');
+                        if(count<=0){
+                            clearInterval(timer);
+                            self.val('获取验证码');
+                            }
+                    },1000)
                 }else if(data['code']===500){
                     xtalert.alertNetworkError()
                 }else{
@@ -62,21 +76,21 @@ $(function () {
 });
 
 
-
-    var count=60;
-    function timers(val) {      //倒计时时间
-        if(val.innerHTML==0){
-            val.innerHTML='重新获取验证';
-            val.removeAttribute('disabled');
-            count=60;
-        }else{
-            val.setAttribute('disabled',true);
-            val.removeAttribute('href');
-            val.innerHTML=count;
-            count-=1
-        }
-        setTimeout(function () {
-            timers(val);
-        },1000)
-    }
-
+    //
+    // var count=60;
+    // function timers(val) {      //倒计时时间
+    //     if(val.innerHTML==0){
+    //         val.innerHTML='重新获取验证';
+    //         val.removeAttribute('disabled');
+    //         count=60;
+    //     }else{
+    //         val.setAttribute('disabled',true);
+    //         val.removeAttribute('href');
+    //         val.innerHTML=count;
+    //         count-=1
+    //     }
+    //     setTimeout(function () {
+    //         timers(val);
+    //     },1000)
+    // }
+    //

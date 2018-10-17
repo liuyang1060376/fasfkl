@@ -1,0 +1,31 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% block title %}
+    CMS用户管理
+{% endblock %}
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+{% block main_content %}
+<table class="table table-bordered">
+    <tr>
+        <td>用户名</td>
+        <td>用户邮箱</td>
+        <td>创建时间</td>
+        <td>用户角色</td>
+        <td>操作</td>
+    </tr>
+    {% for user in CmsUser %}
+    <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.join_time }}</td>
+        <td>
+            {% for role in user.roles %}
+            {{ role.name }}..
+            {% endfor %}
+        </td>
+        <td><button class="btn btn-success">管理</button> <button class="btn btn-danger">移除</button></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

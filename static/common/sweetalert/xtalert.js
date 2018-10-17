@@ -72,11 +72,11 @@ var xtalert = {
             'text': params['msg'] ? params['msg'] : ''
         },function (isConfirm) {
             if(isConfirm){
-                if(params['confirmCallback']){
+                if(params['confirmCallback']){  //确认动作
                     params['confirmCallback']();
                 }
             }else{
-                if(params['cancelCallback']){
+                if(params['cancelCallback']){  //取消动作
                     params['cancelCallback']();
                 }
             }
@@ -86,11 +86,12 @@ var xtalert = {
         功能：带有一个输入框的提示
         参数：字典的形式
             - title：提示框的标题（可选）
-            - text：提示框的内容（可选）
+            - mgs：提示框的内容（可选）
             - placeholder：输入框的占位文字（可选）
             - confirmText：确认按钮文字（可选）
             - cancelText：取消按钮文字（可选）
             - confirmCallback：确认后的执行事件
+            - cancelCallback:取消后的执行时间
     */
     'alertOneInput': function (params) {
         swal({
