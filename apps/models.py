@@ -5,6 +5,7 @@ from datetime import datetime
 class BoardModel(db.Model):         # 板块模型(id,标题，图片地址，简介，创建时间)
     __tablename__='boardmodel'
     id=db.Column(db.Integer,primary_key=True,autoincrement=True,nullable=False)
+    like_number=db.Column(db.Integer,default=0)
     name=db.Column(db.String(20),nullable=False)
     img_url=db.Column(db.String(255),nullable=False)
     intr=db.Column(db.String(100),nullable=False)
@@ -46,7 +47,9 @@ class PostModel(db.Model):
     __tablename__ = 'postmodel'
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)                  #id
     title = db.Column(db.String(200),nullable=False)                                #标题
+    like_number=db.Column(db.Integer,default=0)                                     #点赞数量
     content = db.Column(db.Text,nullable=False)                                     #内容
+    browse=db.Column(db.Integer,nullable=True)
     isgood=db.Column(db.DateTime,nullable=True)                                     #加精
     create_time = db.Column(db.DateTime,default=datetime.now)                       #创建时间
     board_id = db.Column(db.Integer,db.ForeignKey("boardmodel.id"))                 #所属板块
@@ -55,25 +58,51 @@ class PostModel(db.Model):
     board = db.relationship("BoardModel",backref="posts")
     author = db.relationship("Front_user",backref='posts')
 
-#点赞模型
+#评论点赞模型
 class LikeModel(db.Model):
     __tablename__='like'
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     user_id=db.Column(db.String(100),db.ForeignKey('front_user.id'),nullable=False)#点赞人
-    commen_id=db.Column(db.Integer,db.ForeignKey('commen.id'),nullable=False)      #点赞id
+    commen_id=db.Column(db.Integer,db.ForeignKey('commen.id'),nullable=False)      #评论的id
     statue=db.Column(db.Boolean,default=False,nullable=False)                      #是否已赞
 
     commen=db.relationship('Commen_Model',backref='likes')                         #对应的评论
-    user=db.relationship('Front_user',backref='likes')
+    user=db.relationship('Front_user',backref='likes' )
 
 
-# #关注模型
-class FollowModel(db.Model):
-    __tablename__='Follow'
+#帖子点赞模型
+class PostLikeModel(db.Model):
+    __tablename__='post_like'
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)
-    user_id=db.Column(db.String(100),db.ForeignKey('front_user.id'),nullable=False)     #关注人的id
-    follow_id=db.Column(db.String(100),db.ForeignKey('boardmodel.id'),nullable=False)   #被关注人的id
-    statue=db.Column(db.Boolean,default=False,nullable=False)
+    user_id=db.Column(db.String(100),db.ForeignKey('front_user.id'),nullable=False) #点赞人
+    post_id=db.Column(db.Integer,db.ForeignKey('postmodel.id'),nullable=False)           #帖子id
+    statue=db.Column(db.Boolean,default=False,nullable=False)                       #是否已赞
+
+    post=db.relationship('PostModel',backref='likes')
+    user=db.relationship('Front_user',backref='post_likes')
+
+# #关注板块模型
+class FollowModel(db.Model):
+    __tablename__='follow_board'
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
+    board_id=db.Column(db.Integer,db.ForeignKey('boardmodel.id'))         #板块id
+    user_id=db.Column(db.String(100),db.ForeignKey('front_user.id'))      #关注人的id
+    statue=db.Column(db.Boolean,default=True)                             #关注状态
+
+    user=db.relationship('Front_user',backref='fboard' )
+    board=db.relationship('BoardModel',backref='users')
+# 点赞用户模型
+class likeUserModel(db.Model):
+    __tablename__='like_user'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    author_id = db.Column(db.Integer, db.ForeignKey('front_user.id'))    # 被dian'zan
+    user_id = db.Column(db.String(100), db.ForeignKey('front_user.id'))  # 关注人的id
+    statue = db.Column(db.Boolean, default=True)  # 关注状态
+
+
+
+
+
 
 
 

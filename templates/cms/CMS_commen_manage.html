@@ -5,6 +5,28 @@
 {% block page_title %}
     {{ self.title() }}
 {% endblock %}
+{% block head %}
+<script src="{{ static('cms/js/CMS_commen_manage.js') }}"></script>
+{% endblock %}
 {% block main_content %}
-我是板块管理
+<table class="table table-bordered">
+    <tr>
+        <th>文章名称</th>
+        <th>评论人</th>
+        <th>评论内容</th>
+        <th>操作</th>
+    </tr>
+{#遍历输出所有的帖子#}
+    {% for commen in commens %}
+{#方便对帖子进行加精删除#}
+    <tr data-post-id="{{ commen.id }}">
+        <td>{{ commen.post.title }}</td>
+        <td>{{ commen.author.username }}</td>
+        <td>{{ commen.content}}</td>
+        <td>
+            <button id="delcommen" class="btn btn-danger delpost" cm-id="{{ commen.id }}">删除</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

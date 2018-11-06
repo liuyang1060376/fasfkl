@@ -19,10 +19,19 @@
             <h1>
                 <span>【{{ post.board.name }}】{{ post.title }}</span>
             </h1>
+{#爱心#}
+        {% if statue %}
+            <a href="" id="plike" post-id="{{ post.id }}"><div class="aixin"></div></a>
+
+         {% else %}
+                     <a href="" id="plike" post-id="{{ post.id }}"><div class="noxin"></div> </a>
+
+            {% endif %}
+            <span id="likenumber">点赞数量{{ number|length }}</span>
             <p class="txt">
                 <span class="marktxt">精华</span>
                 <span>发表于</span>
-                <span>{{ post.create_time }}</span>
+                <span>{{ post.create_time|settime }}</span>
                 <a href=""><span>{{ post.board.name }}</span></a>
             </p>
             <!--正文部分-->
@@ -44,8 +53,8 @@
                     {% endif %}
 
                 </a>
-                <input type="text" placeholder="说说的你看法">
-                <span>发表</span>
+                <input type="text" placeholder="说说的你看法" id="content1">
+                <span post-id="{{ post.id }}" id="fb">发表</span>
             </div>
         </div>
         <!--评论区域-->
@@ -55,7 +64,6 @@
                     <div class="reply_title">
                         <span class="reply_nav">
                             <a id="select_list" href="">最新评论</a>
-                            <a href="">正序排列</a>
                         </span>
                     </div>
                     <!--评论标题结束-->
@@ -125,7 +133,7 @@
 
 </div>
        <!--右侧区域-->
-    <div id="right" class="col-md-4">
+    <div id="right" class="col-md-3">
         <div class="con">
             <div class="personLayer">
                 <!--用户头像-->
@@ -143,7 +151,7 @@
                     <i></i>
                     </span>
                 </div>
-                <a class="btn" id="personal" href="">他的主页</a>
+                <a class="btn" id="personal" href="/personal/?user-id={{post.author.id }}">他的主页</a>
             </div>
         </div>
         <div class="left_wrap">
@@ -153,8 +161,8 @@
                     <ul>
                         {% if recent_post %}
                         {% for post in recent_post %}
-                        <li>
-                            <a href="">{{ post.title }}</a>
+                        <li class="recent_article">
+                            <a href="{{ '/pdetial/' }}" post-id="{{ post.id }}">{{ post.title }}</a>
                         </li>
                         {% endfor %}
                         {% else %}

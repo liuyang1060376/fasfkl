@@ -15,10 +15,6 @@ class Permission(object):     #权限模型
     BOARDER=        0b00001000
     #6.   管理前台用户的权限
     FRONTUSER=      0b00010000
-    #7    管理后台用户的权限
-    CMSUSER=        0b00100000
-    #8    可以管理管理员（开发者专有）
-    DEVELOP=        0b01000000
 
 
 

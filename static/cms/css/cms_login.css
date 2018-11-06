@@ -31,21 +31,22 @@ body{
     height: 50px;
     margin: 50px auto;
     line-height: 50px;
+    position: relative;
 }
 .regist,.login{
     width: 56px;
     height: 44px;
     font-size: 26px;
     padding: 3px;
-    color: #969696;;
+    color: #969696;
+    margin-left: 36px;
+    margin-top: 10px;
 }
 .regist:hover{
     border-bottom: 3px solid #ea6f5a;
     font-weight: 700;
 }
 .login{
-    border-bottom: 3px solid #ea6f5a;
-    font-weight: 700;
     color: #ea6f5a;
 }
 .bottom{

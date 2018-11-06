@@ -2,20 +2,21 @@
 	width: 853px;
 	height: 402px
 }
-
+*{
+	text-decoration: none;
+}
 .index_bannel {
 	overflow: hidden;
 	width: 100%;
 	height: 402px;
-	border-radius: 20px
 }
 
 #imgseting .item a img {
-	height: min-content
+	height: -webkit-fill-available;
 }
 
 .one_line {
-	margin-top: 29px
+	margin-top: -27px
 }
 
 * {
@@ -35,7 +36,6 @@ a {
 .board {
 	width: 280px;
 	height: 284px;
-	border: 1px solid red
 }
 
 .board a {
@@ -90,7 +90,6 @@ a {
 	margin-right: 0;
 	width: 90px;
 	height: 90px;
-	border-radius: 50%;
 	background: #f7f7fa;
 	text-align: center
 }
@@ -416,12 +415,12 @@ a {
 	font-size: 9pt
 }
 
-.numb i {
+.numb img {
 	display: inline-block;
-	margin: -9px 1px 0;
-	width: 14px;
-	height: 11px;
-	vertical-align: middle
+    margin: -6px 1px 0;
+    width: 14px;
+    height: 16px;
+    vertical-align: middle;
 }
 
 .post-list {
@@ -429,10 +428,8 @@ a {
 	margin-left: -23px
 }
 
-.bottom-zt {
-	margin-top: 52px;
-	height: 75pt
-}
+/*搜索框样式结束*/
+
 
 .bottom-zt ul li {
 	float: left;
@@ -451,18 +448,6 @@ a {
 	color: #969696
 }
 
-.icp {
-	clear: both;
-	margin-left: 300px;
-	color: #c8c8c8;
-	font-size: 9pt
-}
-
-.jumobile {
-	position: relative;
-	width: 100%;
-	height: 40px
-}
 
 .jumobile p {
 	position: absolute;
@@ -475,4 +460,159 @@ a {
 .jumobile img {
 	position: absolute;
 	left: 20px
+}
+/*搜索框样式*/
+.forum-search-content{
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	width: 1170px;
+	margin-top: 62px;
+}
+.search-icon{
+	color: #fff;
+	font-size: 15px;
+}
+.forum-search-text{
+	width: 671px;
+    height: 43px;
+    padding: 8px 0 8px 18px;
+    color: #262626;
+    border-bottom-left-radius: 2px;
+    font-size: 14px;
+    margin-right: -11px;
+	outline: none;
+}
+.forum-operation-guide-conteng{
+	width: 1231px;
+}
+.forum-search-btn{
+	display: inline-block;
+	vertical-align: top;
+	width: 56px;
+	height: 41px;
+	margin-right: 0;
+	line-height: 40px;
+	text-align: center;
+	cursor: pointer;
+	outline: 0;
+	background: #0073eb;
+}
+.key-search{
+	display: inline-block;
+	vertical-align: top;
+	height: 40px;
+	margin-left: 22px;
+}
+.key-search a:hover{
+	color: #0073eb;
+}
+.key-search a{
+	font-size: 14px;
+	padding: 0 4px;
+	margin: 0 4px;
+	box-sizing: border-box;
+	border-radius: 2px;
+	text-decoration: none;
+	color: #757575;
+}
+
+/*页脚*/
+.footer-box{
+    height: 329px;
+    background: #1b242b;
+	margin-top: 41px;
+}
+.footer-nav-box{
+    height: 60px;
+    padding-top: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.footer-logo{
+    float: left;
+    margin-top: 14px;
+}
+.footer-logo a img{
+    width: 116px;
+    height: 32px;
+    background-repeat: no-repeat;
+}
+.footer-nav-box ul{
+    width: 414px;
+    height: 60px;
+    float: right;
+}
+.footer-nav-box ul li{
+    margin-left: 36px;
+    float: left;
+}
+.footer-nav-box ul li a:hover{
+    color: #fbc700;
+}
+.footer-nav-box ul li a{
+    line-height: 60px;
+    font-size: 16px;
+    color: #999;
+}
+.footer-info{
+    height: 188px;
+    padding: 24px 0;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.footer-info-mobile{
+    height: 46px;
+    margin-top: 5px;
+    float: left;
+}
+.footer-info-mobile i{
+    width: 46px;
+    height: 46px;
+    font-size: 33px;
+    margin-left: 20px;
+}
+.mobile-lab{
+    width: 56px;
+    height: 46px;
+    float: left;
+    color: #999;
+    font-size: 14px;
+    line-height: 60px;
+    margin-left: 16px;
+}
+.mobile-lab-number{
+    width: 176px;
+    height: 46px;
+    float: left;
+    color: #fbc700;
+    font-size: 24px;
+    line-height: 60px;
+    margin-left: 16px;
+}
+.address{
+    margin-top: 71px;
+    margin-left: 13px;
+}
+.address li{
+    color: #999;
+    font-size: 14px;
+    line-height: 26px;
+}
+.wx{
+    width: 150px;
+    height: 128px;
+    position: absolute;
+    right: 1px;
+    bottom: 30px;
+}
+.wx p{
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+    margin-top: 8px;
+    padding: 3px 0;
+}
+.wx img{
+    height: 90px;
+    width: 90px;
 }

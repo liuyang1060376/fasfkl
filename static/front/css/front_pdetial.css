@@ -10,7 +10,7 @@ a {
 }
 
 .invitation_con {
-	border: 1px solid #e6e6e6;
+
 	width: 750px;
 	margin: 26px auto;
 	position: relative;
@@ -18,6 +18,37 @@ a {
 	font-family: arial,"Microsoft Yahei","Hiragino Sans GB",sans-serif;
 	color: #333;
 	margin-right: 40px;
+}
+.aixin{
+	position: absolute;
+	right: 26px;
+    top: 40px;
+	width: 30px;
+	height: 30px;
+    background: url("../../../static/front/img/心 爱.png");
+    background-size: 30px 30px;
+}
+.aixin:hover{
+    background: url("../../../static/front/img/不喜欢.png");
+    background-size: 30px 30px;
+}
+.noxin{
+    position: absolute;
+	right: 26px;
+    top: 53px;
+	width: 30px;
+	height: 30px;
+    background: url("../../../static/front/img/心 爱心.png");
+    background-size: 30px 30px;
+}
+#likenumber{
+	position: absolute;
+    right: 3px;
+    top: 85px;
+    width: 65px;
+    height: 30px;
+    font-size: 4px;
+    color: #999;
 }
 
 .invitation_con h1 {
@@ -57,7 +88,7 @@ a {
 	font-size: 16px;
 	margin-top: 40px;
 	word-wrap: break-word;
-	overflow: hidden;
+	overflow: scroll;
 }
 
 .con {
@@ -94,7 +125,7 @@ a {
 	height: 28px;
 	line-height: 16px;
 	font-size: 12px;
-	margin: 20px 118px;
+	margin: 20px 72px;
 	border: 1px solid #ff8b3d;
 	color: #fff;
 	outline: 0;
@@ -189,7 +220,7 @@ a {
 	background: #fff;
 	border: 1px solid #e6e6e6;
 	padding-bottom: 35px;
-	margin-left: 0px;
+	margin-left: 22px;
 }
 
 .reply_con {
@@ -290,8 +321,8 @@ a {
 	font-size: 12px;
 	color: #8c8c8c;
 	position: absolute;
-	left: 52px;
-	top: 2px;
+	left: 63px;
+	top: -2px;
 }
 
 .theme_list_con .title {
@@ -368,7 +399,13 @@ a {
 	color: #ff8b3d;
 	;
 }
-
+#left{
+	border: 1px solid #e6e6e6;
+	margin-top: 20px;
+}
+.col-md-8 {
+    width: 72.666667%;
+}
 .pagination>.active>a {
 	background-color: #ff8b3d;
 	border-color: #ff8b3d;
@@ -383,7 +420,7 @@ a {
 	margin-top: 23px;
 	position: absolute;
 	right: 10px;
-	width: 400px;
+	width: 320px;
 	top: 85px;
 	margin-right: 345px;
 }
@@ -396,6 +433,7 @@ a {
 .reply_area {
 	padding: 30px 0 20px;
 	width: 750px;
+	margin-left: 22px;
 	background: #fff;
 }
 

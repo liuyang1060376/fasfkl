@@ -3,10 +3,9 @@ from flask_script import Manager
 from flask_migrate import MigrateCommand,Migrate
 from exts import db
 from app import app
-from apps.models import PostModel
 from apps.cms.models import CMS_user,CMS_role,cms_user_role,Permission
 from apps.front.models import Front_user
-from apps.models import Banner_Model,BoardModel,LikeModel,PostModel,Commen_Model
+from apps.models import Banner_Model,BoardModel,LikeModel,PostModel,Commen_Model,FollowModel,PostLikeModel
 
 
 manager=Manager(app)    #创建一个manager对象
@@ -32,9 +31,9 @@ def delete_cmsuser(username):                           #自定义一个删除CM
 @manager.command            #创建角色
 def create_role():
     role1=CMS_role(name='游客',desc='只可以对网站进行访问，没有任何权限',role_permission=Permission.VISITOR)
-    role2=CMS_role(name='经营者',desc='可以管理评论,帖子，前台用户,访问网站',role_permission=Permission.FRONTUSER|Permission.VISITOR|Permission.POSTER|Permission.COMMENTER)
-    role3=CMS_role(name='管理员',desc='拥有本系统所有功能')
-    role3.role_permission=Permission.COMMENTER|Permission.POSTER|Permission.VISITOR|Permission.FRONTUSER|Permission.BOARDER|Permission.CMSUSER
+    role2=CMS_role(name='经营者',desc='可以管理评论,帖子,访问网站',role_permission=Permission.VISITOR|Permission.POSTER|Permission.COMMENTER)
+    role3=CMS_role(name='管理者',desc='拥有本系统所有功能')
+    role3.role_permission=Permission.COMMENTER|Permission.POSTER|Permission.VISITOR|Permission.FRONTUSER|Permission.BOARDER
     role4=CMS_role(name='开发者',desc='对系统进行修改的最高权限',role_permission=Permission.ALL_PERMISSION)
     db.session.add_all([role1,role2,role3,role4])
     db.session.commit()
@@ -89,6 +88,8 @@ def create_front(username,passwd,telephone):
     db.session.add(user)
     db.session.commit()
     print('创建前台用户成功')
+
+
 
 
 

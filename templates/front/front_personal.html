@@ -5,28 +5,40 @@
 {% block head %}
     <script src="{{ static('front/js/front_personal.js') }}"></script>
     <link rel="stylesheet" href="{{ static('front/css/front_personal.css') }}">
+    {#七牛云配置#}
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.dev.js"></script>
+    <script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+    <script src="{{ url_for('static',filename='common/lqiniu.js') }}"></script>
 {% endblock %}
 {% block page_content %}
   <div class="personal-box w">
         <!--左侧-->
         <div class="personal-left fl">
             <div class="user-left-head">
-                <span><img src="https://himg.bdimg.com/sys/portrait/item/e16b597f" alt=""></span>
+                <span><img src="{{ user.avatar }}" alt=""></span>
                 <div class="username">
                     {{ user.username }}
                 </div>
                 <div class="huifu">
-                    <div class="fl"><span>{{ posts|length }}</span>帖子</div>
-                    <div class="fr"><span>0</span>回复</div>
+                    <div class="fl"><span>{{ posts_number }}</span>帖子</div>
+                    <div class="fr"><span>{{ commens|length }}</span>回复</div>
                 </div>
                 <div class="live">
                     获赞 <span>30</span>
                 </div>
+                {% if user_type %}
                 <ul class="tag-list">
                     <li class="cur3">我的动态</li>
                     <li>我的收藏</li>
                     <li>我的资料</li>
                 </ul>
+                {% else %}
+                 <ul class="tag-list">
+                    <li class="cur3">他的动态</li>
+                    <li>他的收藏</li>
+                </ul>
+                {% endif %}
             </div>
 
         </div>
@@ -34,8 +46,13 @@
         <!--我的帖子以及回复-->
         <div class="personal-right fr">
             <div class="personal-right-head">
+                {% if user_type %}
                 <a id="my-post" href=""><span class="cur2">我的帖子</span></a>
                 <a id="my-reply" href=""><span>我的回复</span></a>
+                {% else %}
+                 <a id="my-post" href=""><span class="cur2">他的帖子</span></a>
+                <a id="my-reply" href=""><span>他的回复</span></a>
+                {% endif %}
             </div>
             <!--我的帖子-->
             {% for post in posts %}
@@ -44,28 +61,43 @@
                 <span class="item-time">发布于<span>{{ post.create_time }}</span>分钟前</span>
             </div>
             {% endfor %}
+            <div id="fenye" style="text-align: center">{{ pagination.links }}</div>
 
 
             <!--我的回复-->
+            {% for commen in commens  %}
             <div class="my-reply"  style="display: none;">
-                <span class="item-title">评论人</span>
-                <span class="item-time">评论于14分钟前</span>
-                <span class="item-content">评论内容</span>
+                <span class="item-title">{{ commen.author.username }}</span>
+                <span class="item-time">{{ commen.create_time }}</span>
+                <span class="item-content">{{ commen.post.title }}</span>
             </div>
+            {% endfor %}
         </div>
         <!--我的收藏-->
         <div class="personal-right fr" style="display: none;">
             <div class="personal-right-head">
+                {% if user_type %}
                 <a href=""><span class="cur2">我的收藏</span></a>
+                {% else %}
+                <a href=""><span class="cur2">我的收藏</span></a>
+                {% endif %}
             </div>
-            <!--我的帖子-->
+            <!--我的板块-->
+            {% for board in fboard %}
             <div class="my-post">
-                <img src="https://ai.bdstatic.com/file/B4D2C0D00D4345AC903C253AC71E50B2" alt="">
-                <div class="board-name">板块</div>
-                <button class="btn btn-danger">取消关注</button>
+                <img src="{{ board.board.img_url }}" alt="">
+                <div class="board-name">{{ board.board.name }}</div>
+                {% if user_type %}
+                <button id="cancalfollow" class="btn btn-danger" board_id="{{ board.board.id }}" >取消关注</button>
+                {% else %}
+                    <a href="/topic/?id={{ board.board.id }}"  class="btn btn-danger"  >前往</a>
+                {% endif %}
             </div>
+
+            {% endfor %}
         </div>
 
+      {% if user_type %}
         <!--个人资料-->
         <div class="personal-right fr" style="display: none;">
             <div class="personal-right-head">
@@ -77,22 +109,25 @@
                 <table class="table table-bordered" >
                     <tr>
                         <td>用户名</td>
-                        <td>{{ user.username }}</td>
+                        <td id="username">{{ user.username }}</td>
                     </tr>
                     <tr>
                         <td>手机号</td>
-                        <td>{{ user.telephone }}</td>
-                    </tr> <tr>
-                        <td>真实姓名</td>
-                        <td>{{ user.realname }}</td>
-                    </tr> <tr>
-                        <td>性别</td>
-                        <td>{{ user.gender }}</td>
-                    </tr> <tr>
+                        <td id="mobile">{{ user.telephone }}</td>
+                    </tr>
+                     <tr>
                         <td>创建时间</td>
                         <td>{{ user.join_time }}</td>
                     </tr>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">修改</button>
+                    <tr>
+                        <td>简介</td>
+                        <td id="intr">{{ user.personal_introduction }}</td>
+                    </tr>
+                    <tr style="display: none;">
+                        <td>头像</td>
+                        <td id="avatar">{{ user.avatar }}</td>
+                    </tr>
+                    <button id="upperson" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">修改</button>
                 </table>
             </div>
             <!--修改密码-->
@@ -101,13 +136,19 @@
                     <!--email输入部分-->
                     <div id="input_email">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <span></span><input type="text" name="email" placeholder="请输入邮箱账号">
+                        <img src="../../static/front/img/手机.png" alt=""><label for="">{{ g.front_user.telephone }}</label>
                     </div >
                     <!--验证码输入部分-->
                     <div class="input_code">
                         <div class="code"><input type="text" name="code" placeholder="请输入验证码"></div>
                         <div class="get"><input id="get_code" type="button" value="获取验证码"></div>
                     </div>
+                    <div id="input_email">
+                        <input type="password" name="password2" placeholder="请输入新密码">
+                    </div >
+                    <div id="input_email">
+                        <input type="password" name="password3" placeholder="请确认新密码">
+                    </div >
                     <!--修改按钮部分-->
                     <div>
                         <button  id="xiugai">立即修改</button>
@@ -125,34 +166,31 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">修改个人信息</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div><div class="form-group">
-                            <label for="recipient-name" class="control-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div><div class="form-group">
-                            <label for="recipient-name" class="control-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div><div class="form-group">
-                            <label for="recipient-name" class="control-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="recipient-name" class="control-label">用户名:</label>
+                            <input type="text" class="form-control" name="username" placeholder="请输入用户名">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <label for="recipient-name" class="control-label">头像:</label>
+                            <input id="img-input" type="text" class="form-control" name="avatar" placeholder="请上传你的头像">
+                            <button id="upload-btn" class="btn btn-info">上传图片</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">个性签名:</label>
+                            <textarea class="form-control" name="intr"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">退出</button>
+                    <button type="button" class="btn btn-primary" id="upUser">修改</button>
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
 {% endblock %}

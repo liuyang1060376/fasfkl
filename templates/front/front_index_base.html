@@ -28,28 +28,28 @@
 <nav>
         <div class="width-limit">
             <div id="mainlogo">
-                <a class="logo" href="#"><img src="../../static/front/img/index_logo.png" alt=""></a>
+                <a class="logo" href="#"><img src="http://s1.bbs.xiaomi.cn/statics/images/logo_cn.png" alt="logo" id="main-logo"></a>
             </div>
             <div id="menu" class="w">
                 <!--版心左侧-->
                 <div id="menu_child">
                     <ul>
                         <li>
-                            <span id="fangzi"></span><a href="{{ url_for('front.index') }}" id="index">首页</a>
+                            <a href="{{ url_for('front.index') }}" id="index">首页</a>
                         </li>
                         <li>
                            <a href="{{ url_for('front.index') }}" id="board">板块</a>
                         </li>
                         <li id="search_box">
                             <form id="search_form" action="" method="post">
-                                <input id="search" type="text"  placeholder="搜索">
-                                <a id="search_btn" href="{{ '/search/' }}"><i></i></a>
+                                <input id="search" type="text">
+                                <a id="search_btn" href="{{ '/search/' }}"><i id="fdj"></i></a>
                             </form>
                         </li>
                     </ul>
                 </div>
                 <!--版心右侧-->
-                <div style="float: right;">
+                <div class="login-box">
                     {% if not g.front_user %}
                     <a id="login" href="{{ url_for('front.login') }}">登录</a>
                     {% endif %}
@@ -58,7 +58,7 @@
             <div class="nav-inner-right">
                 <a id="writing" href="{{ url_for('front.apost') }}">发帖</a>
                 {% if g.front_user %}
-                    <a href="" id="personal-go"><img src="https://upload.jianshu.io/users/upload_avatars/14135681/dd4aabbb-1a96-46ea-a9f4-f3373c91739f?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120" alt=""><span></span></a>
+                    <a href="" id="personal-go"><img src="{{ g.front_user.avatar }}" alt=""></a>
                 {% else %}
                 <a id="regist" href="{{ url_for('front.regist') }}">注册</a>
                 {% endif %}
@@ -83,16 +83,25 @@
         </div>
     </div>
 </div>
+{% block page_banner %}
+
+{% endblock %}
 {#头结束#}
-<div class="container w" >
+<div class="container" >
     {% block page_content %}
 
     {% endblock %}
 </div>
+{% if g.front_user %}
   <ul class="dropdown-user">
-                    <li><a href="{{ url_for('front.personal') }}"><i></i><span>个人设置</span></a></li>
-                    <li><a href="" id="front_off"><i></i><span>退出</span></a></li>
+                    <li><a href="{{ url_for('front.personal') }}?user-id={{ g.front_user.id }}"><i></i><span>个人设置</span></a></li>
+
+      <li><a href="" id="front_off"><i></i><span>退出</span></a></li>
                 </ul>
+{% endif %}
+{% block footer %}
+
+{% endblock %}
 
 </body>
 </html>

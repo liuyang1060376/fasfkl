@@ -19,18 +19,22 @@ from apps.cms.forms import (
                             Update_boarder_verify,
                             Agoodpost_verify,
                             Delgoodpost_verify,
-                            Delpost_verify
+                            Delpost_verify,
+                            aCmsUser_Verify,
+                            setPermission_Verify,
+                            DelCommen_Verify
                             )
 from exts import db
+from utils.pymysql.pymysqldemo import *
 from apps.cms.decorators import Request_login,Request_Permission
-from apps.cms.models import CMS_user, Permission
+from apps.cms.models import CMS_user, Permission,CMS_role,cms_user_role
 from apps.models import BoardModel,PostModel
 from config import CMS_USER_ID
 from apps.front.models import Front_user
-from apps.models import Banner_Model
+from apps.models import Banner_Model,Commen_Model
 from flask_paginate import get_page_parameter,Pagination
 from datetime import datetime
-from flask_paginate import Pagination
+
 bp=Blueprint('cms',__name__,url_prefix='/cms')  #创建蓝图
 
 
@@ -85,7 +89,7 @@ bp.add_url_rule('/resetpwd/',view_func=ResetPwd_View.as_view('resetpwd'))
    code 200（修改密码成功）
    code 400 (验证码和邮箱不匹配)
 '''
-class Resetemail_View(views.MethodView):                #重置邮箱
+class Resetemail_View(views.MethodView):                    #重置邮箱
     def get(self):
         return render_template('cms/CMS_resetemail.html')
     def post(self):
@@ -101,7 +105,7 @@ class Resetemail_View(views.MethodView):                #重置邮箱
 bp.add_url_rule('/resetemail/',view_func=Resetemail_View.as_view('resetemail'))
 
 
-@bp.route('/boarder/')      #板块管理
+@bp.route('/boarder/')                                      #板块管理
 @Request_Permission(Permission.BOARDER)
 def boarder():
     page=request.args.get('page',default=1)
@@ -110,7 +114,6 @@ def boarder():
     end=(page+8)
     boards=BoardModel.query.order_by(BoardModel.id.desc()).slice(start,end)
     pagination=Pagination(bs_version=3,page=page,total=BoardModel.query.count())
-    print(pagination)
     contents={
         'boards':boards,
         'pagination':pagination
@@ -128,7 +131,7 @@ def addboard():
         img_url=form.img_url.data                   #从验证表单中取到数据
         name=form.name.data
         intr=form.intr.data
-        notice=form.intr.data
+        notice=form.notice.data
         board=BoardModel(img_url=img_url,name=name,intr=intr,notice=notice)
         db.session.add(board)
         db.session.commit()
@@ -179,17 +182,12 @@ def delboard():
 
 
 
-@bp.route('/cmsgroup/')     #CMS用户组管理
-@Request_Permission(Permission.DEVELOP)
-def cmsgroup():
-    return render_template('cms/CMS_cmsgroup_manage.html')
 
-
-@bp.route('/post/')         #帖子管理
+@bp.route('/post/')                                                      #帖子管理
 @Request_Permission(Permission.POSTER)
 def post():
     page = request.args.get(get_page_parameter(), type=int, default=1)  # 获取用户传上来的是第几页
-    start=(page-1)*9                                                      #起始位置
+    start=(page-1)*9                                                    #起始位置
     end=start+9                                                         #结束位置
     posts=PostModel.query.all()
     total=len(posts)                                                    #统计总共多少条数据
@@ -202,30 +200,72 @@ def post():
     return render_template('cms/CMS_post_manage.html',**content)
 
 
-@bp.route('/commen/')        #评论管理
+@bp.route('/commen/')                                   #评论管理
 @Request_login
 @Request_Permission(Permission.COMMENTER)
 def commen():
-    return render_template('cms/CMS_commen_manage.html')
+    commens=Commen_Model.query.all()
+    return render_template('cms/CMS_commen_manage.html',commens=commens)
 
-@bp.route('/front/')        #前台用户管理
+@bp.route('/front/',methods=['GET'])                    #前台用户管理
 @Request_Permission(Permission.FRONTUSER)
 def front():
-    users=Front_user.query.all()        #拿到所有的前台用户
+    users=Front_user.query.all()                        #拿到所有的前台用户
     return render_template('cms/CMS_front_manage.html',users=users)
 
-@bp.route('/cmsuser/')       #后台用户管理
-@Request_Permission(Permission.CMSUSER)
+@bp.route('/cmsuser/',methods=['GET'])                  #后台用户管理
+@Request_Permission(Permission.ALL_PERMISSION)
 def cmsuser():
-    CmsUser=CMS_user.query.all()        #拿到所有的后台用户
+    CmsUser=CMS_user.query.all()                        #拿到所有的后台用户
     return  render_template('cms/CMS_cmsuser_manage.html',CmsUser=CmsUser)
 
+@bp.route('/aCmsUser/',methods=['POST'])                #创建CMS用户
+def aCmsUser():
+    form=aCmsUser_Verify(request.form)
+    if form.validate():
+        username=form.username.data
+        password=form.password.data
+        email=form.email.data
+        cms=CMS_user(username=username,passwd=password,email=email)
+        db.session.add(cms)
+        db.session.commit()
+        return jsonify({'code':200,'message':'创建用户成功'})
+    else:
+        message=form.errors.popitem()[1][0]             #表单验证的第一条出错信息
+        return jsonify({'code':401,'message':message})
+
+@bp.route('/setCms/',methods=['GET'])                                    #设置用户权限界面
+def setCms():
+    cms_id=request.args.get("cms_id")
+    if cms_id:
+        user=CMS_user.query.get(cms_id)
+        roles=user.roles
+        kfz=False
+        jyz=False
+        yk=False
+        gly=False
+        for role in roles:
+            if role.name=='开发者':
+                kfz=True
+            elif role.name=='经营者':
+                jyz=True
+            elif role.name=='游客':
+                yk=True
+            elif role.name=='管理员':
+                gly=True
+        content={
+            'user':user,
+            'kfz':kfz,
+            'jyz':jyz,
+            'yk':yk,
+            'gly':gly
+        }
+        return render_template('cms/CMS_set_cmsUser.html',**content)
+    else:
+        return abort(404)
 
 
-
-
-
-@bp.route('/addbanner/',methods=['POST'])   #添加轮播图
+@bp.route('/addbanner/',methods=['POST'])               #添加轮播图
 @Request_login
 def addbanner():
     form=Add_banner_verify(request.form)                #从后台获取到前台传入的数据其中包括名称，图片地址，跳转地址和优先级，放入表单中进行验证
@@ -389,11 +429,13 @@ def login(message='none'):
             # print(user.check_password(raw_passwd=passwd))
             if user:
                 if user.check_password(raw_passwd=passwd):  # 如果用户名和密码都正确
-                    session[CMS_USER_ID] = user.id
-                    if remember:  # 如果勾选了记住密码
-                        session.permanent = True  # 设置SESSION的过期时间时间【默认是30天，可以设置PERMANENT_SESSION_LIFETIME修改】
-
-                    return redirect(url_for("cms.index"))
+                    if user.has_permission(Permission.VISITOR):
+                        session[CMS_USER_ID] = user.id
+                        if remember:  # 如果勾选了记住密码
+                            session.permanent = True  # 设置SESSION的过期时间时间【默认是30天，可以设置PERMANENT_SESSION_LIFETIME修改】
+                        return redirect(url_for("cms.index"))
+                    else:
+                        return render_template("cms/CMS_login.html", message="您没有权限访问本后台系统")
                 else:
                     print('{0}用户的密码错误'.format(user.username))
                     return render_template("cms/CMS_login.html", message="用户账号或者密码输入错误")
@@ -404,3 +446,79 @@ def login(message='none'):
             print(form.errors)
             return render_template("cms/CMS_login.html", message="信息不正确")
 
+
+@bp.route('/setPermission/',methods=['POST'])                          # 添加用户/移除用户权限
+@Request_login
+@Request_Permission(Permission.ALL_PERMISSION)
+def resetPermission():
+    '''
+    :param:  role_id(角色id)   user_id(用户id)     set(添加/删除)【1/2】
+    :return:
+    '''
+    form=setPermission_Verify(request.form)
+    if form.validate():
+        role_id=form.role_id.data
+        user_id=form.user_id.data
+        set=form.set.data
+        role=CMS_role.query.get(role_id)
+        if role:
+            user=CMS_user.query.get(user_id)
+            if user:
+                if set==1:
+                    role.users.append(user)
+                    db.session.commit()
+                    return jsonify({'code':200,'message':'添加到角色成功'})
+                elif set==2:
+                    print(user_id,role_id)
+                    sql="DELETE FROM cms_user_role WHERE cms_role_id={0} and cms_user_id={1}".format(role_id,user_id)
+                    print(2)
+                    cursor.execute(sql)  # 执行sql语句
+                    connect.commit()
+                    return jsonify({'code':200,'message':'移除角色成功'})
+            else:
+                return jsonify({'code':400,'message':'不存在该用户'})
+        else:
+            return jsonify({'code':401,'message':'不存在该角色'})
+    else:
+        message=form.errors.popitem()[1][0]                            #弹出表单验证出错的信息
+        return jsonify({'code':403,'message':message})
+
+
+@bp.route('/delcommen/',methods=['POST'])
+@Request_login
+@Request_Permission(Permission.COMMENTER)
+def delcommen():
+    '''
+    :param id(帖子id)
+    :return:
+    '''
+    form=DelCommen_Verify(request.form)
+    if form.validate():
+        id=form.id.data
+        commen=Commen_Model.query.filter_by(id=id).first()
+        db.session.delete(commen)
+        db.session.commit()
+        return jsonify({'code':200,'message':'删除成功'})
+    else:
+        message = form.errors.popitem()[1][0]  # 弹出表单验证出错的信息
+        return jsonify({'code': 403, 'message': message})
+
+@bp.route('/searchpost/',methods=['GET'])
+def searchpost():
+    content=request.args.get('content')
+    print(type(content))
+    content = '%' + content + '%'
+    posts=PostModel.query.filter(PostModel.title.like(content)).all()
+    page = request.args.get(get_page_parameter(), type=int, default=1)  # 获取用户传上来的是第几页
+    start=(page-1)*9                                                    #起始位置
+    end=start+9                                                         #结束位置
+    total=len(posts)                                                    #统计总共多少条数据
+    pagination=Pagination(bs_version=3,page=page,total=total)
+    posts = PostModel.query.filter(PostModel.title.like(content)).slice(start,end).all()
+    print(posts)
+    content={
+        'posts':posts,
+        'pagination':pagination
+    }
+    print('ok')
+    return render_template('cms/CMS_post_manage.html',**content)

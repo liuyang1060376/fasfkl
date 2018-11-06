@@ -5,6 +5,9 @@
 {% block page_title %}
     {{ self.title() }}
 {% endblock %}
+{% block head %}
+    <script src="{{ static('cms/js/cms_cmsuser_manage.js') }}"></script>
+{% endblock %}
 {% block main_content %}
 <table class="table table-bordered">
     <tr>
@@ -15,17 +18,55 @@
         <td>操作</td>
     </tr>
     {% for user in CmsUser %}
-    <tr>
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.join_time }}</td>
-        <td>
-            {% for role in user.roles %}
-            {{ role.name }}..
-            {% endfor %}
-        </td>
-        <td><button class="btn btn-success">管理</button> <button class="btn btn-danger">移除</button></td>
+        <tr cms_id="{{ user.id }}" >
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.join_time }}</td>
+            <td>
+                {% for role in user.roles %}
+                {{ role.name }}..
+                {% endfor %}
+            </td>
+        <td><a href="/cms/setCms/" class="setcms"><button class="btn btn-success">管理</button></a><button class="btn btn-danger" id="delete">移除</button></td>
     </tr>
+        </a>
     {% endfor %}
 </table>
+    <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal">创建新用户</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">用户名:</label>
+            <input type="text" class="form-control" id="username">
+          </div>
+            <div class="form-group">
+            <label for="recipient-name" class="control-label">密码:</label>
+            <input type="password" class="form-control" id="password">
+          </div>
+            <div class="form-group">
+            <label for="recipient-name" class="control-label">确认密码:</label>
+            <input type="password" class="form-control" id="password1">
+          </div>
+            <div class="form-group">
+            <label for="recipient-name" class="control-label">邮箱号:</label>
+            <input type="text" class="form-control" id="email">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="addcms" type="button" class="btn btn-primary">添加用户</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

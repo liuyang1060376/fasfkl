@@ -2,9 +2,10 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    text-decoration: none;
 }
 a{
-    text-decoration: none;
+    text-decoration: none!important;
 }
 i{
     font-style: normal;

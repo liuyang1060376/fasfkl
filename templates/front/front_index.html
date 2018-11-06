@@ -7,8 +7,7 @@
 {% block title %}
 飞讯社区首页
 {% endblock %}
-{% block page_content %}
-
+{% block page_banner %}
 {#    轮播图开始#}
     <div class="row one_line">
         <div class="col-md-12">
@@ -61,6 +60,21 @@
 {#轮播图结束#}
 
 
+{% endblock %}
+{% block page_content %}
+<div class="forum-search-content">
+    <input type="text" class="forum-search-text" placeholder="搜索帖子或者问题" id="contentbt">
+    <div class="forum-search-btn">
+        <a href="{{ '/search/' }}" id="search_go"><span class="search-icon"></span></a>
+    </div>
+    <div class="key-search">
+        <a href="/search/?content=人工智能">人工智能</a>
+        <a href="/search/?content=语音识别">语音识别</a>
+        <a href="/search/?content=人脸识别">人脸识别</a>
+        <a href="/search/?content=识别率">识别率</a>
+    </div>
+</div>
+
 {#排行榜#}
 <div class="row">
     <!--左侧排行榜-->
@@ -93,24 +107,24 @@
                                 <!--标题-->
                                 <div class="theme_list_con">
                                     <div class="title">
-                                       <a href="{{ url_for('front.pdetial') }}" class="post_detial" data-post-id="{{ post.id }}">{{ post.title|truncate(length=17) }}</a>
+                                       <a href="{{ url_for('front.pdetial') }}" class="post_detial" data-post-id="{{ post.id }}">{{ post.title|truncate(length=14) }}</a>
                                        <div id="goodpost">精</div>
                                     </div>
                                     <!--发布时间-->
                                     <div  class="auth_msg">
                                         <a href="">{{post.author.username}}·</a>
-                                        <span>{{ post.create_time }}·</span>
+                                        <span>{{ post.create_time|settime }}·</span>
                                         <span>{{ post.board.name }}</span>
                                         <p class="see">
                                     <span class="numb">
-                                        <i></i>
-                                        6444
+                                        <img src="../../static/front/img/浏览.png" alt="">
+                                        {{ post.browse }}
                                     </span>
                                         </p>
                                         <p class="see">
                                             <span class="numb">
-                                                <i></i>
-                                                    6444
+                                                <img src="../../static/front/img/点赞%20.png" alt="">
+                                                    {{ post.like_number }}
                                             </span>
                                         </p>
                                     </div>
@@ -149,24 +163,24 @@
                                 <!--标题-->
                                 <div class="theme_list_con">
                                     <div class="title">
-                                        <a href="{{ url_for('front.pdetial') }}" class="post_detial" data-post-id="{{ rpost.id }}">{{ rpost.title|truncate(length=17) }}</a>
+                                        <a href="{{ url_for('front.pdetial') }}" class="post_detial" data-post-id="{{ rpost.id }}">{{ rpost.title|truncate(length=14) }}</a>
                                         <img src="" alt="">
                                     </div>
                                     <!--发布时间-->
                                     <div  class="auth_msg">
                                         <a href="">{{ rpost.author.username }}·</a>
-                                        <span>{{ rpost.create_time }}·</span>
+                                        <span>{{ rpost.create_time|settime }}·</span>
                                         <span>{{ rpost.board.name }}</span>
                                         <p class="see">
                                             <span class="numb">
-                                             <i></i>
-                                             6444
+                                             <img src="../../static/front/img/浏览.png" alt="">
+                                             {{ rpost.browse }}
                                             </span>
                                         </p>
                                         <p class="see">
                                             <span class="numb">
-                                                <i></i>
-                                                    6444
+                                                <img src="../../static/front/img/点赞%20.png" alt="">
+                                                    {{ rpost.like_number }}
                                             </span>
                                         </p>
                                     </div>
@@ -208,10 +222,10 @@
                                 <div class="board-title">
                                     <div class="board-titel-inner">{{ board.name }}</div>
                                 </div>
-                                <div>{{ board.intr }}</div>
+                                <div>{{ board.intr|truncate(length=16) }}</div>
                                 <div>
                                     <span>帖子数量：{{ board.posts|length }}</span>
-                                    <span>回复数量：</span>
+                                    <span>关注人数：{{ board.like_number }}</span>
                                 </div>
                             </div>
                         </div>
@@ -221,21 +235,43 @@
           {% endfor %}
     </div>
 <!--板块列表结束-->
-    <div class="bottom-zt w">
-    <ul>
-        <li><a href="">关于飞讯</a></li>
-        <li><a href="">联系我们</a></li>
-        <li><a href="">加入我们</a></li>
-        <li><a href="">飞讯出版</a></li>
-        <li><a href="">品牌与徽标</a></li>
-        <li><a href="">帮助中心</a></li>
-        <li><a href="">合作伙伴</a></li>
-    </ul>
-    <div class="icp">
-        @2019-2058 上海abc科技邮箱公司/飞讯/沪ICP备11018329号-5
+
+{% endblock %}
+{% block footer %}
+    <!--页脚-->
+<div class="footer-box">
+    <div class="w">
+        <div class="footer-nav-box">
+            <div class="footer-logo">
+                <a href=""><img src="http://s1.bbs.xiaomi.cn/statics/images/logo_cn.png" alt=""></a>
+            </div>
+            <ul>
+                <li><a href="">关于我们</a></li>
+                <li><a href="">联系我们</a></li>
+                <li><a href="">站点地图</a></li>
+                <li><a href="">友情链接</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="jumobile">
-        <p>举报电话：88888888</p>
+    <div class="footer-info w">
+        <div class="footer-info-mobile">
+            <i></i>
+        </div>
+        <div class="mobile-lab">
+            客服电话
+        </div>
+        <div class="mobile-lab-number">
+            8888-888-888
+        </div>
+        <ul class="address clear">
+            <li>地理位置</li>
+            <li>安徽省宣城市广德县枫桥8号</li>
+            <li>邮编：242200</li>
+        </ul>
+        <div class="wx">
+            <p><img src="../../static/front/img/erweima.jpg" alt=""></p>
+            <p>官方微信</p>
+        </div>
     </div>
 </div>
 {% endblock %}

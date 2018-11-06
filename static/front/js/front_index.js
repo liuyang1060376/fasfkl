@@ -17,3 +17,12 @@ $(function () {                                     //点击帖子进入帖子�
        self.attr('href',newherf)
    })
 });
+$(function () {                                     //搜索
+    $('#search_go').on('click',function (event) {
+        content=$('#contentbt').val();
+        var self=$(this);
+        var href=self.attr('href');
+        var newhref=href+'?content='+content;
+        self.attr('href',newhref)
+    })
+});

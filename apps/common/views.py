@@ -1,11 +1,12 @@
-from flask import Blueprint,request,jsonify, make_response
+from flask import Blueprint,request,jsonify, make_response,g
 from flask_mail import Message
 from exts import mail
 from utils.miaodi.miaodi_sms_regist import sendRegistMessage
 from random import randrange
 from utils.captcha import ValidCodeImg
 from io import BytesIO
-from .forms import mobile_verify
+from .forms import mobile_verify,resetpasswd_verify
+from apps.front.decorators import request_login
 from utils.memcached import mc
 import qiniu
 bp=Blueprint('common',__name__,url_prefix='/common')
@@ -15,7 +16,7 @@ def index():
 
 
 '''错误代码500；服务器异常  200 成功   错误代码400： 没有输入邮箱账号'''
-@bp.route('/send_email_code/')                                          #发送邮箱验证码验证
+@bp.route('/send_email_code/',methods=['GET'])                                          #发送邮箱验证码验证
 def send_email_code():
     email=request.args.get('email')     #获取get方式发送过来的email
     if not email:           #如果没有输入email
@@ -40,23 +41,30 @@ code 404(未输入)
 '''
 @bp.route('/send_message/',methods=['GET','POST'])          #发送注册短信验证码
 def send_message():
-    if request.form.get('mobile'):
-        if request.method=='POST':
-            form=mobile_verify(request.form)
-            if form.validate():
-                code = randrange(1000, 9999)
-                code=str(code)
-                mobile=form.mobile.data
-                smsContent = '【飞讯社区】您的验证码为{0}，请于5分钟内正确输入，如非本人操作，请忽略此短信。'.format(code)
-                sendRegistMessage(mobile, smsContent)
-                mc.set(mobile,code,300)    #把验证码存放在memcached里面,过期时间为5分钟
-                print('{0}的验证码为{1}'.format(mobile,code))
-                return  jsonify({'code':200,'message':'发送成功'})
-            else:
-                message=form.errors.popitem()[1][0]
-                return jsonify({'code':403,'message':message})
-    else:
-        return jsonify({'code':403,'message':'请输入手机号'})
+    '''
+    :param:mobile
+    :return:
+    '''
+    if request.method=='POST':
+        form=mobile_verify(request.form)
+        if form.validate():
+            code = randrange(1000, 9999)
+            code=str(code)
+            mobile=form.mobile.data
+            smsContent = '【飞讯社区】您的验证码为{0}，请于5分钟内正确输入，如非本人操作，请忽略此短信。'.format(code)
+            sendRegistMessage(mobile, smsContent)
+            mc.set(mobile,code,300)    #把验证码存放在memcached里面,过期时间为5分钟
+            print('{0}的验证码为{1}'.format(mobile,code))
+            return  jsonify({'code':200,'message':'发送成功'})
+        else:
+            message=form.errors.popitem()[1][0]
+            return jsonify({'code':403,'message':message})
+
+
+
+
+
+
 
 
 
@@ -82,6 +90,9 @@ def uptoken():
     bucket = 'boards'
     token = q.upload_token(bucket)
     return jsonify({"uptoken":token})
+
+
+
 
 
 

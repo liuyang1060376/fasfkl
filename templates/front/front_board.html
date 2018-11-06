@@ -20,27 +20,31 @@
             </div>
             <div class="title_right">
                 <div id="board_title">{{ board.name }}</div>
-                <div id="info">收录了 <span>5</span>篇文章·<span>13423</span>人关注</div>
+                <div id="info">收录了 <span>{{ postcount}}</span>篇文章·<span>{{ followcount }}</span>人关注</div>
             </div>
             <a href="{{ url_for('front.apost') }}"><div class="addpost">投稿</div></a>
-            <div class="Focus">关注</div>
+
+            {% if statue %}
+            <div  id="nofollow" class="noFocus follow" board-id="{{ board.id }}">已关注</div>
+            {% else %}
+            <div  class="Focus follow" board-id="{{ board.id }}">关注</div>
+            {% endif %}
+
         </div>
         <div class="test"></div>
 
         <div class="title_select">
-            <div class="title_select_inner title_select_xanzhong">
-                <a href="">全部帖子</a>
+            <div class="title_select_inner zx title_select_xanzhong">
+                <a class="sort-tag"  href="{{ url_for('front.topic') }}?id={{ board.id }}&st=1">最新帖子</a>
             </div>
-            <div class="title_select_inner">
-                <a href="">精华帖</a>
+            <div class="title_select_inner jh">
+                <a class="sort-tag" href="{{ url_for('front.topic') }}?id={{ board.id }}&st=2">精华帖</a>
             </div>
-            <div class="title_select_inner">
-                <a href="">热门帖</a>
-            </div>
-            <div class="title_select_inner">
-                <a href="">待讨论</a>
+            <div class="title_select_inner rm">
+                <a class="sort-tag" href="{{ url_for('front.topic') }}?id={{ board.id }}&st=3">热门帖</a>
             </div>
         </div>
+
 
 {#    帖子列表#}
 <div class="theme">
@@ -69,19 +73,19 @@
                     <!--发布时间-->
                     <div  class="auth_msg">
                         <a href="">{{ post.author.username }}·</a>
-                        <span>{{ post.create_time }}·</span>
+                        <span>{{ post.create_time|settime }}·</span>
                         <span>{{ board.name }}</span>
                         <p class="see">
                             <span class="numb">
-                                <i></i>
-                                6444
+                                <img src="../../static/front/img/浏览.png" alt="浏览图标">
+                                        {{ post.browse }}
                             </span>
 
                         </p>
                         <p class="see">
                             <span class="numb">
-                                <i></i>
-                                6444
+                                <img src="../../static/front/img/点赞%20.png" alt="点赞图标">
+                                                    {{ post.like_number }}
                             </span>
                         </p>
                     </div>
@@ -98,7 +102,7 @@
 
 
     <!--右侧-->
-    <div class="col-md-3">
+    <div class="col-md-3 right-board">
         <p class="title">专题公告</p>
         <div class="collection">
             <p>{{ board.notice }}</p>

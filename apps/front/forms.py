@@ -3,7 +3,7 @@ from wtforms.validators import Regexp, EqualTo, Length,InputRequired
 from utils.memcached import mc
 from .models import Front_user
 from apps.models import PostModel
-
+from flask import g
 
 class Regist_verify(Form):              #注册表单验证
     ''' 用户名长度为2到20位
@@ -74,3 +74,25 @@ class Acommen_verify(Form):                                                 #添
         post=PostModel.query.filter_by(id=field.article_id).first
         if not post:
             raise ValidationError('您评论的帖子不存在哟')
+
+
+class upUser_verify(Form):                                                  #修改用户基本信息
+    username=StringField(validators=[Regexp(r'.{2,16}',message='用户名格式不正确')])
+    avatar=StringField(validators=[InputRequired('请选择您的头像')])
+    intr=StringField(validators=[InputRequired('简介信息不能为空哦')])
+
+
+
+class resetpassword_Veriyf(Form):
+    password = StringField(validators=[Regexp('[a-z0-9]{6,16}', message='密码为6到16位，字母数字下下划线')])
+    password1 = StringField(validators=[EqualTo("password", message='2次密码不一致')])
+    code = StringField(validators=[Regexp(r'\d{4}', message='验证码输入错误')])
+
+    '''自定义短信验证码验证'''
+    def validate_code(self, field):
+        mobile =g.front_user.telephone
+        code = mc.get(mobile)  # 从memcached中取出这个手机号码对应的验证码
+        print(code)
+        print(type(code))
+        if not code or code != field.data:
+            raise ValidationError(message='手机验证码错误')

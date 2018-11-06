@@ -1,7 +1,12 @@
-/**
- * Created by Administrator on 2016/12/17.
- */
-
+$(function () {
+    $('#search_post').on('click',function (event) {
+        var self=$(this);
+        content=$('#content_post').val();
+        var href=self.attr('href');
+        newhref=href+content;
+        self.attr('href',newhref);
+    })
+});
 $(function () {
     $('.nav-sidebar>li>a').click(function (event) {
         var that = $(this);
@@ -38,10 +43,16 @@ $(function () {
     } else if(url.indexOf('post') >= 0){  //帖子管理
         var postManageLi = $('.post-manage');
         postManageLi.addClass('unfold').siblings().removeClass('unfold');
+    } else if(url.indexOf('commen') >= 0){  //评论管理
+        var postManageLi = $('.comments-manage');
+        postManageLi.addClass('unfold').siblings().removeClass('unfold');
     }else if(url.indexOf('boarder') >= 0) { //板块管理
         var boardManageLi = $('.board-manage');
         boardManageLi.addClass('unfold').siblings().removeClass('unfold');
     } else if(url.indexOf('cmsuser') >= 0){ //cms管理
+        var cmsuserManageLi = $('.cmsuser-manage');
+        cmsuserManageLi.addClass('unfold').siblings().removeClass('unfold');
+    }else if(url.indexOf('setCms') >= 0){ //cms管理
         var cmsuserManageLi = $('.cmsuser-manage');
         cmsuserManageLi.addClass('unfold').siblings().removeClass('unfold');
     }else if(url.indexOf('front') >= 0){ //板块管理
@@ -52,3 +63,5 @@ $(function () {
         bannerManageLi.addClass('unfold').siblings().removeClass('unfold');
     }
 });
+
+

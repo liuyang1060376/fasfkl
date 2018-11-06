@@ -1,0 +1,54 @@
+{% extends 'cms/CMS_index_base.html' %}
+{% block title %}
+    设置CMS用户
+{% endblock %}
+{% block head %}
+        <script src="{{ static('cms/js/cms_set_cmsuser.js') }}"></script>
+{% endblock %}
+{% block page_title %}
+设置CMS用户权限
+{% endblock %}
+{% block main_content %}
+<table class="table table-bordered table-condensed">
+    <tr class="active">
+        <td>用户名</td>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr class="success">
+        <td>邮箱</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    <tr class="info">
+        <td>创建时间</td>
+        <td>{{ user.join_time }}</td>
+    </tr>
+    <tr class="warning">
+        <td>权限</td>
+        <td>
+            {% for role in user.roles %}
+            {{ role.name }}..
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+        {% if gly %}
+    <button class="btn btn-success   shezhi" user-id="{{ user.id }}" set="2" role-id="3">移除管理员权限</button>
+            {% else %}
+                <button class="btn btn-success  shezhi" user-id="{{ user.id }}" set="1" role-id="3">添加管理员权限</button>
+        {% endif %}
+        {% if yk %}
+        <button class="btn btn-primary  shezhi" user-id="{{ user.id }}" set="2" role-id="1">移除游客权限</button>
+        {% else %}
+            <button class="btn btn-primary  shezhi" user-id="{{ user.id }}" set="1" role-id="1">添加游客权限</button>
+        {% endif %}
+    {% if jyz %}
+    <button class="btn btn-danger  shezhi" user-id="{{ user.id }}" set="2" role-id="2">移除经营者权限</button>
+    {% else %}
+    <button class="btn btn-danger  shezhi" user-id="{{ user.id }}" set="1" role-id="2">添加经营者权限</button>
+    {% endif %}
+    {% if kfz %}
+    <button class="btn btn-info  shezhi" user-id="{{ user.id }}" set="2" role-id="4">移除开发者权限</button>
+    {% else %}
+    <button class="btn btn-info  shezhi" user-id="{{ user.id }}" set="1" role-id="4">添加开发者权限</button>
+    {% endif %}
+{% endblock %}

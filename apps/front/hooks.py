@@ -13,6 +13,7 @@ def beforerequest():
         user=Front_user.query.get(front_user_id)
         if user:
             g.front_user=user
+            print(g.front_user)
     boards=BoardModel.query.all()
     if boards:
         g.boards=boards

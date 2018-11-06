@@ -35,9 +35,12 @@ UEDITOR_UPLOAD_TO_QINIU = True
 UEDITOR_QINIU_ACCESS_KEY = "H23yW6b9whf42VT-eCaTxc4mHeRrOIhPtTbA1KNX"
 UEDITOR_QINIU_SECRET_KEY = "teaFq7bSuo7oq3Sh_zy8aJR80H1xk0CPmJ8N3net"
 UEDITOR_QINIU_BUCKET_NAME = "boards"            #上传到7牛云空间的名字
-UEDITOR_QINIU_DOMAIN = "http://pfc2azd93.bkt.clouddn.com/"
+UEDITOR_QINIU_DOMAIN = "lydwz.club"
 
 
+
+# 自动加载模板过滤器
+TEMPLATES_AUTO_RELOAD=True
 
 
 

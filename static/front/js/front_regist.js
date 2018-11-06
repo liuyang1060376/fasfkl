@@ -44,7 +44,6 @@ $(function () {
                }
            },
            error:function () {
-               alert('shibai');
                xtalert.alertNetworkError()
            }
        })

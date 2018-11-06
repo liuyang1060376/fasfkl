@@ -11,7 +11,7 @@ class GenderEnum(enum.Enum):   #构造了个性别枚举类
 
 class Front_user(db.Model):     #创建一个前台用户类
     __tablename__='front_user'  #表明
-    id=db.Column(db.String(200),primary_key=True,default=shortuuid.uuid)    #用户id
+    id=db.Column(db.String(200),primary_key=True)                               #用户id
     username=db.Column(db.String(20),nullable=False)                        #用户名
     telephone=db.Column(db.String(11),nullable=False,unique=True)           #手机号
     __passwd=db.Column(db.String(200),nullable=False)                        #密码

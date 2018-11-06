@@ -1,15 +1,30 @@
 window.onload=function () {                                 //搜索框样式
     var search=document.getElementById("search");
-    search.onfocus=function () {
-        $(this).animate({
-            "width":"270px"
-        },1000)
-    };
     search.onblur=function () {
-        search.style.width="160px";
+        $('#search').animate({
+            "margin-left":"272px"
+            },1000);
     };
 };
+$(function () {                                                   //搜索功能
+   $('#search_btn').on('click',function (event) {
+       var searchs=$('#search').css('margin-left');
+       if (searchs==='0px'){
+           content=$('#search').val();
+           var self=$(this);
+           var href=self.attr('href');
+           var newhref=href+'?content='+content;
+           self.attr('href',newhref)
+       }else{
+           event.preventDefault();
+           $('#search').animate({
+            "margin-left":"0"
+            },1000);
+           console.log('hah');
+       }
 
+   });
+});
 
 $(function () {                                             //注销登录
    $('#front_off').on('click',function (event) {
@@ -39,11 +54,17 @@ $(function () {                                                 //侧边tag
     $('#close').on('click',function (event) {
         $('.f-left-nav').animate({
             "width":0
+        },1000);
+        $('.left-tag').animate({
+            "width":0
         },1000)
     });
     $('#board').on('click',function (event) {
         event.preventDefault();
         $('.f-left-nav').animate({
+            'width':258
+        },1000);
+        $('.left-tag').animate({
             'width':258
         },1000);
     })
@@ -60,15 +81,7 @@ $(function () {                                                 //侧边单击�
 });
 
 
-$(function () {                                                   //搜索功能
-   $('#search_btn').on('click',function (event) {
-       content=$('#search').val();
-       var self=$(this);
-       var href=self.attr('href');
-       var newhref=href+'?content='+content;
-       self.attr('href',newhref)
-   })
-});
+
 $(function () {                                                    //鼠标进入头像显示设置列表显示
     $('#personal-go').on('click',function (event) {
         event.preventDefault();

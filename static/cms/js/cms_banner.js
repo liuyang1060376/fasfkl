@@ -1,6 +1,6 @@
 $(function () {         //添加banner,用于添加一个新的banner
    $('#submit-btn').on('click',function (event) {   //当你单击添加banner这个按钮时候
-       event.preventDefault()                       //阻止表单的默认提交事件
+       event.preventDefault();                      //阻止表单的默认提交事件
        var name=$('input[name=name]').val();        //获取需要的信息
        var img_url=$('input[name=img_url]').val();
        var link_url=$('input[name=link_url]').val();
